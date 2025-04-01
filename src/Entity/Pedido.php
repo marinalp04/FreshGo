@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PedidoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,6 +25,17 @@ class Pedido
 
     #[ORM\Column]
     private ?float $total = null;
+
+    /**
+     * @var Collection<int, DetallePedidos>
+     */
+    #[ORM\OneToMany(targetEntity: DetallePedidos::class, mappedBy: 'pedido')]
+    private Collection $detallePedidos;
+
+    public function __construct()
+    {
+        $this->detallePedidos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -61,6 +74,36 @@ class Pedido
     public function setTotal(float $total): static
     {
         $this->total = $total;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DetallePedidos>
+     */
+    public function getDetallePedidos(): Collection
+    {
+        return $this->detallePedidos;
+    }
+
+    public function addDetallePedido(DetallePedidos $detallePedido): static
+    {
+        if (!$this->detallePedidos->contains($detallePedido)) {
+            $this->detallePedidos->add($detallePedido);
+            $detallePedido->setPedido($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDetallePedido(DetallePedidos $detallePedido): static
+    {
+        if ($this->detallePedidos->removeElement($detallePedido)) {
+            // set the owning side to null (unless already changed)
+            if ($detallePedido->getPedido() === $this) {
+                $detallePedido->setPedido(null);
+            }
+        }
 
         return $this;
     }
