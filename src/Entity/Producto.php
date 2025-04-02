@@ -37,9 +37,16 @@ class Producto
     #[ORM\OneToMany(targetEntity: DetallePedidoCliente::class, mappedBy: 'producto')]
     private Collection $detallePedidoClientes;
 
+    /**
+     * @var Collection<int, DetallePedidoProveedor>
+     */
+    #[ORM\OneToMany(targetEntity: DetallePedidoProveedor::class, mappedBy: 'producto')]
+    private Collection $detallePedidoProveedors;
+
     public function __construct()
     {
         $this->detallePedidoClientes = new ArrayCollection();
+        $this->detallePedidoProveedors = new ArrayCollection();
     }
 
     
@@ -133,6 +140,36 @@ class Producto
             // set the owning side to null (unless already changed)
             if ($detallePedidoCliente->getProducto() === $this) {
                 $detallePedidoCliente->setProducto(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DetallePedidoProveedor>
+     */
+    public function getDetallePedidoProveedors(): Collection
+    {
+        return $this->detallePedidoProveedors;
+    }
+
+    public function addDetallePedidoProveedor(DetallePedidoProveedor $detallePedidoProveedor): static
+    {
+        if (!$this->detallePedidoProveedors->contains($detallePedidoProveedor)) {
+            $this->detallePedidoProveedors->add($detallePedidoProveedor);
+            $detallePedidoProveedor->setProducto($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDetallePedidoProveedor(DetallePedidoProveedor $detallePedidoProveedor): static
+    {
+        if ($this->detallePedidoProveedors->removeElement($detallePedidoProveedor)) {
+            // set the owning side to null (unless already changed)
+            if ($detallePedidoProveedor->getProducto() === $this) {
+                $detallePedidoProveedor->setProducto(null);
             }
         }
 
