@@ -43,10 +43,17 @@ class Producto
     #[ORM\OneToMany(targetEntity: DetallePedidoProveedor::class, mappedBy: 'producto')]
     private Collection $detallePedidoProveedors;
 
+    /**
+     * @var Collection<int, ComposicionProducto>
+     */
+    #[ORM\OneToMany(targetEntity: ComposicionProducto::class, mappedBy: 'producto')]
+    private Collection $composicionProductos;
+
     public function __construct()
     {
         $this->detallePedidoClientes = new ArrayCollection();
         $this->detallePedidoProveedors = new ArrayCollection();
+        $this->composicionProductos = new ArrayCollection();
     }
 
     
@@ -170,6 +177,36 @@ class Producto
             // set the owning side to null (unless already changed)
             if ($detallePedidoProveedor->getProducto() === $this) {
                 $detallePedidoProveedor->setProducto(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ComposicionProducto>
+     */
+    public function getComposicionProductos(): Collection
+    {
+        return $this->composicionProductos;
+    }
+
+    public function addComposicionProducto(ComposicionProducto $composicionProducto): static
+    {
+        if (!$this->composicionProductos->contains($composicionProducto)) {
+            $this->composicionProductos->add($composicionProducto);
+            $composicionProducto->setProducto($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComposicionProducto(ComposicionProducto $composicionProducto): static
+    {
+        if ($this->composicionProductos->removeElement($composicionProducto)) {
+            // set the owning side to null (unless already changed)
+            if ($composicionProducto->getProducto() === $this) {
+                $composicionProducto->setProducto(null);
             }
         }
 
