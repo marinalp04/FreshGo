@@ -32,15 +32,17 @@ class Producto
     private ?Categoria $categoria = null;
 
     /**
-     * @var Collection<int, DetallePedidos>
+     * @var Collection<int, DetallePedidoCliente>
      */
-    #[ORM\OneToMany(targetEntity: DetallePedidos::class, mappedBy: 'producto')]
-    private Collection $detallePedidos;
+    #[ORM\OneToMany(targetEntity: DetallePedidoCliente::class, mappedBy: 'producto')]
+    private Collection $detallePedidoClientes;
 
     public function __construct()
     {
-        $this->detallePedidos = new ArrayCollection();
+        $this->detallePedidoClientes = new ArrayCollection();
     }
+
+    
 
     public function getId(): ?int
     {
@@ -108,32 +110,34 @@ class Producto
     }
 
     /**
-     * @return Collection<int, DetallePedidos>
+     * @return Collection<int, DetallePedidoCliente>
      */
-    public function getDetallePedidos(): Collection
+    public function getDetallePedidoClientes(): Collection
     {
-        return $this->detallePedidos;
+        return $this->detallePedidoClientes;
     }
 
-    public function addDetallePedido(DetallePedidos $detallePedido): static
+    public function addDetallePedidoCliente(DetallePedidoCliente $detallePedidoCliente): static
     {
-        if (!$this->detallePedidos->contains($detallePedido)) {
-            $this->detallePedidos->add($detallePedido);
-            $detallePedido->setProducto($this);
+        if (!$this->detallePedidoClientes->contains($detallePedidoCliente)) {
+            $this->detallePedidoClientes->add($detallePedidoCliente);
+            $detallePedidoCliente->setProducto($this);
         }
 
         return $this;
     }
 
-    public function removeDetallePedido(DetallePedidos $detallePedido): static
+    public function removeDetallePedidoCliente(DetallePedidoCliente $detallePedidoCliente): static
     {
-        if ($this->detallePedidos->removeElement($detallePedido)) {
+        if ($this->detallePedidoClientes->removeElement($detallePedidoCliente)) {
             // set the owning side to null (unless already changed)
-            if ($detallePedido->getProducto() === $this) {
-                $detallePedido->setProducto(null);
+            if ($detallePedidoCliente->getProducto() === $this) {
+                $detallePedidoCliente->setProducto(null);
             }
         }
 
         return $this;
     }
+
+    
 }

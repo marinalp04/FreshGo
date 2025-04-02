@@ -2,21 +2,21 @@
 
 namespace App\Entity;
 
-use App\Repository\PedidoRepository;
+use App\Repository\PedidoClienteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PedidoRepository::class)]
-class Pedido
+#[ORM\Entity(repositoryClass: PedidoClienteRepository::class)]
+class PedidoCliente
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'pedidos')]
+    #[ORM\ManyToOne(inversedBy: 'pedidoClientes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Usuario $usuario = null;
 
@@ -27,14 +27,14 @@ class Pedido
     private ?float $total = null;
 
     /**
-     * @var Collection<int, DetallePedidos>
+     * @var Collection<int, DetallePedidoCliente>
      */
-    #[ORM\OneToMany(targetEntity: DetallePedidos::class, mappedBy: 'pedido')]
-    private Collection $detallePedidos;
+    #[ORM\OneToMany(targetEntity: DetallePedidoCliente::class, mappedBy: 'pedido_cliente')]
+    private Collection $detallePedidoClientes;
 
     public function __construct()
     {
-        $this->detallePedidos = new ArrayCollection();
+        $this->detallePedidoClientes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -79,29 +79,29 @@ class Pedido
     }
 
     /**
-     * @return Collection<int, DetallePedidos>
+     * @return Collection<int, DetallePedidoCliente>
      */
-    public function getDetallePedidos(): Collection
+    public function getDetallePedidoClientes(): Collection
     {
-        return $this->detallePedidos;
+        return $this->detallePedidoClientes;
     }
 
-    public function addDetallePedido(DetallePedidos $detallePedido): static
+    public function addDetallePedidoCliente(DetallePedidoCliente $detallePedidoCliente): static
     {
-        if (!$this->detallePedidos->contains($detallePedido)) {
-            $this->detallePedidos->add($detallePedido);
-            $detallePedido->setPedido($this);
+        if (!$this->detallePedidoClientes->contains($detallePedidoCliente)) {
+            $this->detallePedidoClientes->add($detallePedidoCliente);
+            $detallePedidoCliente->setPedidoCliente($this);
         }
 
         return $this;
     }
 
-    public function removeDetallePedido(DetallePedidos $detallePedido): static
+    public function removeDetallePedidoCliente(DetallePedidoCliente $detallePedidoCliente): static
     {
-        if ($this->detallePedidos->removeElement($detallePedido)) {
+        if ($this->detallePedidoClientes->removeElement($detallePedidoCliente)) {
             // set the owning side to null (unless already changed)
-            if ($detallePedido->getPedido() === $this) {
-                $detallePedido->setPedido(null);
+            if ($detallePedidoCliente->getPedidoCliente() === $this) {
+                $detallePedidoCliente->setPedidoCliente(null);
             }
         }
 

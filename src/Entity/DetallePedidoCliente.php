@@ -2,27 +2,27 @@
 
 namespace App\Entity;
 
-use App\Repository\DetallePedidosRepository;
+use App\Repository\DetallePedidoClienteRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: DetallePedidosRepository::class)]
-class DetallePedidos
+#[ORM\Entity(repositoryClass: DetallePedidoClienteRepository::class)]
+class DetallePedidoCliente
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'detallePedidos')]
+    #[ORM\ManyToOne(inversedBy: 'detallePedidoClientes')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Pedido $pedido = null;
+    private ?PedidoCliente $pedido_cliente = null;
 
-    #[ORM\ManyToOne(inversedBy: 'detallePedidos')]
+    #[ORM\ManyToOne(inversedBy: 'detallePedidoClientes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Producto $producto = null;
 
     #[ORM\Column]
-    private ?int $cantidad = null;
+    private ?float $cantidad = null;
 
     #[ORM\Column]
     private ?float $precio_unitario = null;
@@ -32,14 +32,14 @@ class DetallePedidos
         return $this->id;
     }
 
-    public function getPedido(): ?Pedido
+    public function getPedidoCliente(): ?PedidoCliente
     {
-        return $this->pedido;
+        return $this->pedido_cliente;
     }
 
-    public function setPedido(?Pedido $pedido): static
+    public function setPedidoCliente(?PedidoCliente $pedido_cliente): static
     {
-        $this->pedido = $pedido;
+        $this->pedido_cliente = $pedido_cliente;
 
         return $this;
     }
@@ -56,12 +56,12 @@ class DetallePedidos
         return $this;
     }
 
-    public function getCantidad(): ?int
+    public function getCantidad(): ?float
     {
         return $this->cantidad;
     }
 
-    public function setCantidad(int $cantidad): static
+    public function setCantidad(float $cantidad): static
     {
         $this->cantidad = $cantidad;
 

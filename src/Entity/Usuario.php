@@ -37,15 +37,17 @@ class Usuario
     private ?int $rol = null;
 
     /**
-     * @var Collection<int, Pedido>
+     * @var Collection<int, PedidoCliente>
      */
-    #[ORM\OneToMany(targetEntity: Pedido::class, mappedBy: 'usuario')]
-    private Collection $pedidos;
+    #[ORM\OneToMany(targetEntity: PedidoCliente::class, mappedBy: 'usuario')]
+    private Collection $pedidoClientes;
 
     public function __construct()
     {
-        $this->pedidos = new ArrayCollection();
+        $this->pedidoClientes = new ArrayCollection();
     }
+
+    
 
     public function getId(): ?int
     {
@@ -137,32 +139,34 @@ class Usuario
     }
 
     /**
-     * @return Collection<int, Pedido>
+     * @return Collection<int, PedidoCliente>
      */
-    public function getPedidos(): Collection
+    public function getPedidoClientes(): Collection
     {
-        return $this->pedidos;
+        return $this->pedidoClientes;
     }
 
-    public function addPedido(Pedido $pedido): static
+    public function addPedidoCliente(PedidoCliente $pedidoCliente): static
     {
-        if (!$this->pedidos->contains($pedido)) {
-            $this->pedidos->add($pedido);
-            $pedido->setUsuario($this);
+        if (!$this->pedidoClientes->contains($pedidoCliente)) {
+            $this->pedidoClientes->add($pedidoCliente);
+            $pedidoCliente->setUsuario($this);
         }
 
         return $this;
     }
 
-    public function removePedido(Pedido $pedido): static
+    public function removePedidoCliente(PedidoCliente $pedidoCliente): static
     {
-        if ($this->pedidos->removeElement($pedido)) {
+        if ($this->pedidoClientes->removeElement($pedidoCliente)) {
             // set the owning side to null (unless already changed)
-            if ($pedido->getUsuario() === $this) {
-                $pedido->setUsuario(null);
+            if ($pedidoCliente->getUsuario() === $this) {
+                $pedidoCliente->setUsuario(null);
             }
         }
 
         return $this;
     }
+
+    
 }

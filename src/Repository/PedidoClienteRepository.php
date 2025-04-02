@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\Pedido;
+use App\Entity\PedidoCliente;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Pedido>
+ * @extends ServiceEntityRepository<PedidoCliente>
  */
-class PedidoRepository extends ServiceEntityRepository
+class PedidoClienteRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Pedido::class);
+        parent::__construct($registry, PedidoCliente::class);
     }
 
     //    /**
-    //     * @return Pedido[] Returns an array of Pedido objects
+    //     * @return PedidoCliente[] Returns an array of PedidoCliente objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class PedidoRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Pedido
+    //    public function findOneBySomeField($value): ?PedidoCliente
     //    {
     //        return $this->createQueryBuilder('p')
     //            ->andWhere('p.exampleField = :val')
