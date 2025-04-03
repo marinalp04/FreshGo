@@ -11,5 +11,16 @@
     <a href="/login">
         <button>Iniciar Sesión</button>
     </a>
+
+    <h2>Categorías</h2>
+    <ul>
+        <?php foreach ($categorias as $categoria): ?>
+            <li>
+                <a href="categoria.php?id=<?= $categoria['id'] ?>">
+                    <?= htmlspecialchars($categoria['nombre']) ?>
+                </a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
 </body>
 </html>
