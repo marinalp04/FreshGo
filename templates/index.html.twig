@@ -8,19 +8,22 @@
 <body>
     <h1>Bienvenido a Fresh&Go</h1>
     <p>Tu plataforma de comida saludable</p>
-    <a href="/login">
+    <a href="{{ path('app_login') }}">
         <button>Iniciar Sesión</button>
     </a>
 
     <h2>Categorías</h2>
     <ul>
-        <?php foreach ($categorias as $categoria): ?>
+        {% for categoria in categorias %}
             <li>
-                <a href="categoria.php?id=<?= $categoria['id'] ?>">
-                    <?= htmlspecialchars($categoria['nombre']) ?>
+                <a href="{{ path('app_categoria_productos', { id: categoria.id }) }}">
+                    {{ categoria.nombre }}
                 </a>
             </li>
-        <?php endforeach; ?>
+        {% else %}
+            <li>No hay categorías disponibles.</li>
+        {% endfor %}
     </ul>
 </body>
 </html>
+

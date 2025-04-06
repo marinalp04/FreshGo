@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Categoria;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -10,13 +12,13 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 final class MainController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function home(): Response
-    {
-        // En lugar de redirigir al login, mostramos la página principal
-        ob_start();
-        include __DIR__ . '/../../templates/index.php';
-        $content = ob_get_clean();
-        return new Response($content);
+    public function home(EntityManagerInterface $em): Response
+    { 
+        $categorias = $em->getRepository(Categoria::class)->findAll();
+
+        return $this->render('index.html.twig', [
+            'categorias' => $categorias,
+        ]);
     }
 
 
