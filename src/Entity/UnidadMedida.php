@@ -16,13 +16,16 @@ class UnidadMedida
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $unidad_medida = null;
+    private ?string $nombre = null;
 
     /**
      * @var Collection<int, Ingrediente>
      */
     #[ORM\OneToMany(targetEntity: Ingrediente::class, mappedBy: 'unidad_medida')]
     private Collection $ingredientes;
+
+    #[ORM\Column(length: 255)]
+    private ?string $unidad_abreviada = null;
 
     public function __construct()
     {
@@ -34,14 +37,14 @@ class UnidadMedida
         return $this->id;
     }
 
-    public function getUnidadMedida(): ?string
+    public function getNombre(): ?string
     {
-        return $this->unidad_medida;
+        return $this->nombre;
     }
 
-    public function setUnidadMedida(string $unidad_medida): static
+    public function setNombre(string $nombre): static
     {
-        $this->unidad_medida = $unidad_medida;
+        $this->nombre = $nombre;
 
         return $this;
     }
@@ -72,6 +75,18 @@ class UnidadMedida
                 $ingrediente->setUnidadMedida(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUnidadAbreviada(): ?string
+    {
+        return $this->unidad_abreviada;
+    }
+
+    public function setUnidadAbreviada(string $unidad_abreviada): static
+    {
+        $this->unidad_abreviada = $unidad_abreviada;
 
         return $this;
     }
