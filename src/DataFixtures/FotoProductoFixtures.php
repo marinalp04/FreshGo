@@ -5,9 +5,10 @@ namespace App\DataFixtures;
 use App\Entity\FotoProducto;
 use App\Entity\Producto;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class FotoProductoFixtures extends Fixture
+class FotoProductoFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -23,5 +24,11 @@ class FotoProductoFixtures extends Fixture
 
 
         $manager->flush();
+    }
+    public function getDependencies() : array
+    {
+        return [
+            ProductoFixtures::class, // Asegura que GenreFixtures se ejecute antes
+        ];
     }
 }
