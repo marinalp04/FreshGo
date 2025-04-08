@@ -21,21 +21,21 @@ final class CategoriasController extends AbstractController
         ]);
     }
 
-    #[Route('/categoria/{id}', name: 'app_categoria')]
-    public function productosPorCategoria(int $id, CategoriaRepository $categoriaRepo): Response
-    {
-        $categoria = $categoriaRepo->find($id);
+    // #[Route('/categoria/{id}', name: 'app_categoria')]
+    // public function productosPorCategoria(int $id, CategoriaRepository $categoriaRepo): Response
+    // {
+    //     $categoria = $categoriaRepo->find($id);
 
-        if (!$categoria) {
-            throw $this->createNotFoundException('Categoría no encontrada');
-        }
+    //     if (!$categoria) {
+    //         throw $this->createNotFoundException('Categoría no encontrada');
+    //     }
 
-        $productos = $categoria->getProductos(); 
+    //     $productos = $categoria->getProductos(); 
 
-        return $this->render('categoria/productos.html.twig', [
-            'categoria' => $categoria,
-            'productos' => $productos,
-        ]);
-    }
+    //     return $this->render('categoria/productos.html.twig', [
+    //         'categoria' => $categoria,
+    //         'productos' => $productos,
+    //     ]);
+    // }
 
 }
