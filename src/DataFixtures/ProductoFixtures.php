@@ -5,9 +5,10 @@ namespace App\DataFixtures;
 use App\Entity\Categoria;
 use App\Entity\Producto;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ProductoFixtures extends Fixture
+class ProductoFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -31,5 +32,12 @@ class ProductoFixtures extends Fixture
 
         $this->addReference('producto1', $producto1);
         $this->addReference('producto2', $producto2);
+    }
+
+    public function getDependencies() : array
+    {
+        return [
+            CategoriaFixtures::class, 
+        ];
     }
 }

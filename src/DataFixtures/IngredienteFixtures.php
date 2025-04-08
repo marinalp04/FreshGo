@@ -5,9 +5,10 @@ namespace App\DataFixtures;
 use App\Entity\Ingrediente;
 use App\Entity\UnidadMedida;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class IngredienteFixtures extends Fixture
+class IngredienteFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -27,5 +28,11 @@ class IngredienteFixtures extends Fixture
 
         $this->addReference('ingrediente1', $ingrediente1);
         $this->addReference('ingrediente2', $ingrediente2);
+    }
+    public function getDependencies() : array
+    {
+        return [
+            UnidadMedidaFixtures::class, // Asegura que GenreFixtures se ejecute antes
+        ];
     }
 }
