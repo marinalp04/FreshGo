@@ -1,6 +1,7 @@
 security:
     password_hashers:
-        App\Entity\Usuario: 'auto'
+        App\Entity\Usuario: 
+            algorithm: plaintext
 
     providers:
         app_user_provider:
@@ -19,6 +20,7 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
+                default_target_path: /
                 username_parameter: email
                 password_parameter: _password
             logout:
