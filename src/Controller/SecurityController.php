@@ -10,14 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-final class MainController extends AbstractController
+final class SecurityController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
-    public function home(): Response
-    { 
-        return $this->render('index.html.twig');
-    }
-
 
     #[Route('/login', name: 'app_login')]
     public function login(Request $request, AuthenticationUtils $authenticationUtils): Response
