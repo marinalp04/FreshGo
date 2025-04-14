@@ -29,15 +29,17 @@
         </li>
         {# Para mostrar el usuario, o iniciar sesion #}
         {% if app.user %}
-                <li class="nav-item">Bienvenido, {{ app.user.email }}</li>
+                <li class="nav-item nav-link">Bienvenido, {{ app.user.email }}</li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ path('app_logout') }}">Cerrar sesión</a>
                 </li>
             {% else %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ path('app_login') }}">Iniciar sesión</a>
+                  <a class="nav-link" href="{{ path('app_login') }}">Iniciar sesión</a> 
                 </li>
-                {# <li><a href="{{ path('app_registro') }}">Registro</a></li> #}
+                <li>
+                  <a class="nav-link" href="{{ path('app_registro') }}">Registrarse</a>
+                </li> 
             {% endif %}
       </ul>
     </div>
