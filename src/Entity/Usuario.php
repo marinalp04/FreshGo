@@ -6,9 +6,10 @@ use App\Repository\UsuarioRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UsuarioRepository::class)]
-class Usuario
+class Usuario implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -168,5 +169,33 @@ class Usuario
         return $this;
     }
 
+     // Métodos de UserInterface
+
+     public function getUserIdentifier(): string
+     {
+         return (string) $this->email;
+     }
+ 
+     public function getRoles(): array
+     {  
+         // Devuelve un array de roles, por ahora no lo necesito
+         return ['ROLE_USER'];
+     }
+ 
+     public function getPassword(): string
+     {
+         return $this->contrasena;
+     }
+ 
+     public function getSalt(): ?string
+     {
+        //No lo necesito por ahora
+         return null;
+     }
+ 
+     public function eraseCredentials(): void
+     {
+         // Borra cualquier dato sensible como contraseñas sin cifrar, no lo necesito por ahora
+     }
     
 }
