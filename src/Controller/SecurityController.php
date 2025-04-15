@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use App\Form\RegistrationType;
 
 final class SecurityController extends AbstractController
 {
@@ -41,28 +43,28 @@ final class SecurityController extends AbstractController
         UserAuthenticatorInterface $userAuthenticator,
         UsuarioAuthenticator $authenticator
     ): Response {
-        if ($request->isMethod('POST')) {
-            $usuario = new Usuario();
-            $usuario->setNombre($request->request->get('nombre'));
-            $usuario->setApellidos($request->request->get('apellidos'));
-            $usuario->setEmail($request->request->get('email'));
-            $usuario->setContrasena($request->request->get('contrasena')); // sin cifrar por ahora
-            $usuario->setDireccion($request->request->get('direccion'));
-            $usuario->setTelefono((int) $request->request->get('telefono'));
-            $usuario->setRol(1);
+        $usuario = new Usuario();
 
+        $form = $this->createForm(RegistrationType::class, $usuario);
+    
+       
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $usuario->setRol(0);
             $entityManager->persist($usuario);
             $entityManager->flush();
-
-            // Autenticación automática tras el registro
+            
             return $userAuthenticator->authenticateUser(
                 $usuario,
                 $authenticator,
                 $request
             );
         }
-
-        return $this->render('registro/index.html.twig');
+    
+        return $this->render('registro/index.html.twig', [
+            'form' => $form->createView(), 
+        ]);
     }
 
     #[Route(path: '/login', name: 'app_login')]

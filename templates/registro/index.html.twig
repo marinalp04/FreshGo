@@ -3,26 +3,24 @@
 {% block title %}Registro{% endblock %}
 
 {% block content %}
-    <h2>Registrarse</h2>
-    <form method="post">
-        <label for="nombre">Nombre:</label>
-        <input type="text" name="nombre" required>
+    <h1>Registro</h1>
 
-        <label for="apellidos">Apellidos:</label>
-        <input type="text" name="apellidos" required>
+    {{ form_start(form) }}
 
-        <label for="email">Correo electrónico:</label>
-        <input type="email" name="email" required>
+    {# Mostrar errores generales del formulario #}
+    {{ form_errors(form) }}
 
-        <label for="contrasena">Contraseña:</label>
-        <input type="password" name="contrasena" required>
+    {% for field in form %}
+        {% if field.vars.name != '_token' and field.vars.name != 'submit' %}
+            <div class="form-group">
+                {{ form_label(field) }}
+                {{ form_widget(field) }}
+                {{ form_errors(field) }}
+            </div>
+        {% endif %}
+    {% endfor %}
 
-        <label for="direccion">Dirección:</label>
-        <input type="text" name="direccion" required>
-
-        <label for="telefono">Teléfono:</label>
-        <input type="text" name="telefono" required>
-
-        <button type="submit">Registrarse</button>
-    </form>
+    
+    {{ form_end(form) }}
 {% endblock %}
+
