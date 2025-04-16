@@ -5,7 +5,7 @@
 {% block content %}
     <h1>Registro</h1>
 
-    {{ form_start(form) }}
+    {{ form_start(form, {'attr': {'id': 'form-registro'}}) }}
 
     {# Mostrar errores generales del formulario #}
     {{ form_errors(form) }}
@@ -15,12 +15,13 @@
             <div class="form-group">
                 {{ form_label(field) }}
                 {{ form_widget(field) }}
-                {{ form_errors(field) }}
+                <div class="mensaje-error" id="error-{{ field.vars.id }}"></div>
             </div>
         {% endif %}
     {% endfor %}
 
     
     {{ form_end(form) }}
+    <script src="{{ asset('js/registro.js') }}"></script>
 {% endblock %}
 
