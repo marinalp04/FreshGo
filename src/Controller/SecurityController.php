@@ -13,9 +13,13 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Form\RegistrationType;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class SecurityController extends AbstractController
 {
+    public function __construct(private UserPasswordHasherInterface $passwordHasher) {
+        // Constructor
+    }
     // #[Route('/login', name: 'app_login')]
     // public function loginBackup(Request $request, AuthenticationUtils $authenticationUtils): Response
     // {
@@ -41,20 +45,29 @@ final class SecurityController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         UserAuthenticatorInterface $userAuthenticator,
-        UsuarioAuthenticator $authenticator
+        UsuarioAuthenticator $authenticator,
+        UserPasswordHasherInterface $passwordHasher
     ): Response {
         $usuario = new Usuario();
 
         $form = $this->createForm(RegistrationType::class, $usuario);
-    
-       
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            // Para encriptar la contraseña
+            $hashedPassword = $passwordHasher->hashPassword(
+                $usuario,
+                $usuario->getPassword()
+            );
+            $usuario->setPassword($hashedPassword);
+            // Para asignar rol por defecto
             $usuario->setRol(0);
+
             $entityManager->persist($usuario);
             $entityManager->flush();
             
+            //Autenticar al usuario automaticamente después de registrarse
             return $userAuthenticator->authenticateUser(
                 $usuario,
                 $authenticator,

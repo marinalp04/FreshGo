@@ -32,7 +32,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $contrasena = null;
+    private ?string $password = null;
 
     #[ORM\Column(length: 255)]
     private ?string $direccion = null;
@@ -97,14 +97,14 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getContrasena(): ?string
+    public function getPassword(): ?string
     {
-        return $this->contrasena;
+        return $this->password;
     }
 
-    public function setContrasena(string $contrasena): static
+    public function setPassword(string $password): static
     {
-        $this->contrasena = $contrasena;
+        $this->password = $password;
 
         return $this;
     }
@@ -188,10 +188,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
          return ['ROLE_USER'];
      }
  
-     public function getPassword(): string
-     {
-         return $this->contrasena;
-     }
+     
  
      public function getSalt(): ?string
      {

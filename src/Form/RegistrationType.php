@@ -33,7 +33,7 @@ class RegistrationType extends AbstractType
                     new Email(['message' => 'Por favor, ingrese un email válido.']),
                 ],
             ])
-            ->add('contrasena', PasswordType::class, [
+            ->add('password', PasswordType::class, [
                 'constraints' => [
                     new NotBlank(['message' => 'La contraseña no puede estar vacía.']),
                 ],
