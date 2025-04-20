@@ -8,7 +8,9 @@
     <h1>Categorías</h1>
     <ul>
         {% for categoria in categorias %}
+        <a href="{{ path('categoria_productos', {'id': categoria.id}) }}">
             <li>{{ categoria.nombre }}</li>
+        </a>
         {% else %}
             <li>No hay categorías disponibles.</li>
         {% endfor %}
