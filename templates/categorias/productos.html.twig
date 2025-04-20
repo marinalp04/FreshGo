@@ -1,13 +1,19 @@
-<h2>Productos de la categoría: {{ categoria.nombre }}</h2>
+{% extends 'base.html.twig' %}
 
-{% if productos is not empty %}
-    <ul>
-        {% for producto in productos %}
-            <li>
-                {{ producto.nombre }}- {{ producto.precio }}€
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No hay productos en esta categoría.</p>
-{% endif %}
+{% block title %}Productos de la categoría: {{ categoria.nombre }}{% endblock %}
+
+{% block content %}
+    {% if productos is not empty %}
+        <ul>
+            {% for producto in productos %}
+                <li>
+                    <a href="{{ path('producto_detalle', {'id': producto.id}) }}">
+                        {{ producto.nombre }}
+                    </a> - {{ producto.precio }}€
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay productos en esta categoría.</p>
+    {% endif %}
+{% endblock %}

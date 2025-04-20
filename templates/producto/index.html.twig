@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ producto.nombre }}{% endblock %}
+
+{% block content %}
+    <p>Precio: {{ producto.precio }}€</p>
+    <p>Descripción: {{ producto.descripcion }}</p>
+
+    <form method="post" action="">
+        <button type="submit">Añadir al carrito</button>
+    </form>
+
+    <a href="{{ path('categoria_productos', {'id': producto.categoria.id}) }}">Volver a la categoría</a>
+{% endblock %}
+
