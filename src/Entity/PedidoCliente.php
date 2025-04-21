@@ -11,6 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: PedidoClienteRepository::class)]
 class PedidoCliente
 {
+    public const ESTADO_CARRITO = 'carrito';
+    public const ESTADO_CONFIRMADO = 'confirmado';
+    public const ESTADO_EN_PROCESO = 'en_proceso';
+    public const ESTADO_ENTREGADO = 'entregado';
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
