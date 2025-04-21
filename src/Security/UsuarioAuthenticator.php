@@ -22,8 +22,11 @@ class UsuarioAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private RouterInterface $router)
+    private UrlGeneratorInterface $urlGenerator;
+
+    public function __construct(private RouterInterface $router, UrlGeneratorInterface $urlGenerator)
     {
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function authenticate(Request $request): Passport
@@ -43,11 +46,18 @@ class UsuarioAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+        $session = $request->getSession();
+        $targetPath = $session->get('_target_path');
+
+        
+        
+        if ($targetPath) {
+            $session->remove('_target_path');
             return new RedirectResponse($targetPath);
         }
-
-        return new RedirectResponse($this->router->generate('app_home'));
+        
+        // Si no hay una URL guardada, se redirige a home
+        return new RedirectResponse($this->urlGenerator->generate('app_home'));
     }
 
     protected function getLoginUrl(Request $request): string

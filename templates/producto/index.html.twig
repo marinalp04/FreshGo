@@ -10,8 +10,10 @@
         {% if app.user %}
             <a href="{{ path('anadir_al_carrito', { id: producto.id }) }}">Añadir al carrito</a>
         {% else %}
-            <a href="{{ path('app_login') }}">Inicia sesión para añadir al carrito</a>
-            <p>¿No tienes cuenta? <a href="{{ path('app_registro') }}">Regístrate aquí</a></p>
+            <a href="{{ path('app_login', { redirectTo: path('producto_detalle', { id: producto.id }) }) }}">
+                Inicia sesión para añadir al carrito
+            </a>
+            <p>¿No tienes cuenta? <a href="{{ path('app_registro', {'redirectTo': app.request.uri}) }}">Regístrate aquí</a></p>
         {% endif %}
     </form>
 
