@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carrito{% endblock %}
+
+{% block content %}
+<h1>Tu carrito</h1>
+
+{% if detalles is empty %}
+    <p>No tienes productos en el carrito.</p>
+{% else %}
+    <table>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio Unitario</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for detalle in detalles %}
+                <tr>
+                    <td>{{ detalle.producto.nombre }}</td>
+                    <td>{{ detalle.precioUnitario }}€</td>
+                    <td>{{ detalle.cantidad }}</td>
+                    <td>{{ detalle.precioUnitario * detalle.cantidad }}€</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p><strong>Total:</strong> {{ pedido.total }}€</p>
+{% endif %}
+
+<a href="{{ path('app_home') }}">Seguir comprando</a>
+{% endblock %}

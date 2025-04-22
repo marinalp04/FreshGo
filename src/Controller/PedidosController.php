@@ -15,13 +15,15 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security as SecurityBundleSecurity;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
+
 
 final class PedidosController extends AbstractController
 {
     public function __construct(private RequestStack $requestStack) {}
 
 
+    //Funcion paara añadir un producto al carrito
     #[Route('/carrito/anadir/{id}', name: 'anadir_al_carrito')]
     public function anadirAlCarrito(
         Producto $producto,
@@ -66,4 +68,30 @@ final class PedidosController extends AbstractController
 
         return $this->redirectToRoute('mostrar_carrito');
     }
+
+    //Funcion para mostrar el carrito
+    #[Route('/carrito', name: 'mostrar_carrito')]
+    public function mostrarCarrito(
+        EntityManagerInterface $em,
+        Security $security
+    ): Response {
+        $usuario = $security->getUser();
+
+        if (!$usuario) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $pedido = $em->getRepository(PedidoCliente::class)->findOneBy([
+            'usuario' => $usuario,
+            'estado' => PedidoCliente::ESTADO_CARRITO,
+        ]);
+
+        $detalles = $pedido ? $pedido->getDetallePedidoClientes() : [];
+
+        return $this->render('carrito/mostrar.html.twig', [
+            'pedido' => $pedido,
+            'detalles' => $detalles,
+        ]);
+    }
+
 }

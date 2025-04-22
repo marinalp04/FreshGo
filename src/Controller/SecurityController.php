@@ -73,6 +73,7 @@ final class SecurityController extends AbstractController
                 $authenticator,
                 $request
             );
+          
         }
     
         return $this->render('registro/index.html.twig', [

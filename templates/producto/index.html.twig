@@ -13,7 +13,9 @@
             <a href="{{ path('app_login', { redirectTo: path('producto_detalle', { id: producto.id }) }) }}">
                 Inicia sesión para añadir al carrito
             </a>
-            <p>¿No tienes cuenta? <a href="{{ path('app_registro', {'redirectTo': app.request.uri}) }}">Regístrate aquí</a></p>
+            <p>¿No tienes cuenta? <a href="{{ path('app_registro', { redirectTo: path('producto_detalle', { id: producto.id }) }) }}">
+            Regístrate aquí
+            </a></p>
         {% endif %}
     </form>
 

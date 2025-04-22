@@ -48,8 +48,6 @@ class UsuarioAuthenticator extends AbstractLoginFormAuthenticator
     {
         $session = $request->getSession();
         $targetPath = $session->get('_target_path');
-
-        
         
         if ($targetPath) {
             $session->remove('_target_path');
