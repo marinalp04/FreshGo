@@ -24,11 +24,11 @@ final class PedidosController extends AbstractController
 
 
     //Funcion paara añadir un producto al carrito
-    #[Route('/carrito/anadir/{id}', name: 'anadir_al_carrito')]
+    #[Route('/carrito/anadir/{id}', name: 'anadir_al_carrito', methods: ['POST'])]
     public function anadirAlCarrito(
         Producto $producto,
         EntityManagerInterface $em,
-        SecurityBundleSecurity $security,
+        Security $security,
         SessionInterface $session,
         Request $request,
     ): Response {
@@ -39,6 +39,8 @@ final class PedidosController extends AbstractController
             $session->set('_target_path', $request->getUri());
             return $this->redirectToRoute('app_login');
         }
+
+        $cantidad = max((int) $request->request->get('cantidad', 1), 1);
 
         // Buscar si ya tiene un carrito iniciado
         $pedido = $em->getRepository(PedidoCliente::class)->findOneBy([
@@ -62,20 +64,19 @@ final class PedidosController extends AbstractController
         ]);
 
         if ($detalleExistente) {
-            $detalleExistente->setCantidad($detalleExistente->getCantidad() + 1);
+            $detalleExistente->setCantidad($detalleExistente->getCantidad() + $cantidad);
         } else {
             $detalleExistente = new DetallePedidoCliente();
             $detalleExistente->setPedidoCliente($pedido);
             $detalleExistente->setProducto($producto);
-            $detalleExistente->setCantidad(1);
+            $detalleExistente->setCantidad($cantidad);
             $detalleExistente->setPrecioUnitario($producto->getPrecio());
             $em->persist($detalleExistente);
         }
 
         // Actualizar el total
-        $pedido->setTotal($pedido->getTotal() + $producto->getPrecio());
-
-        $em->persist($detalleExistente);
+        $pedido->setTotal($pedido->getTotal() + ($producto->getPrecio() * $cantidad));
+       
         $em->flush();
 
         return $this->redirectToRoute('mostrar_carrito');
