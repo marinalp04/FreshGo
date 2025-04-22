@@ -55,15 +55,27 @@ final class PedidosController extends AbstractController
             $em->persist($pedido);
         }
 
-        // Añadir producto a DetallePedidoCliente
-        $detalle = new DetallePedidoCliente();
-        $detalle->setPedidoCliente($pedido);
-        $detalle->setProducto($producto);
-        $detalle->setCantidad(1); // Luego lo cambio a cantidad elegida por el usuario
-        $detalle->setPrecioUnitario($producto->getPrecio());
+        // Comprobar si ya existe el producto en el carrito antes de añadirlo
+        $detalleExistente = $em->getRepository(DetallePedidoCliente::class)->findOneBy([
+            'pedido_cliente' => $pedido,
+            'producto' => $producto
+        ]);
+
+        if ($detalleExistente) {
+            $detalleExistente->setCantidad($detalleExistente->getCantidad() + 1);
+        } else {
+            $detalleExistente = new DetallePedidoCliente();
+            $detalleExistente->setPedidoCliente($pedido);
+            $detalleExistente->setProducto($producto);
+            $detalleExistente->setCantidad(1);
+            $detalleExistente->setPrecioUnitario($producto->getPrecio());
+            $em->persist($detalleExistente);
+        }
+
+        // Actualizar el total
         $pedido->setTotal($pedido->getTotal() + $producto->getPrecio());
 
-        $em->persist($detalle);
+        $em->persist($detalleExistente);
         $em->flush();
 
         return $this->redirectToRoute('mostrar_carrito');
