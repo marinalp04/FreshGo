@@ -142,4 +142,34 @@ final class PedidosController extends AbstractController
         return $this->redirectToRoute('mostrar_carrito');
     }
 
+    //Funcion para vaciar el carrito
+    #[Route('/carrito/vaciar', name: 'vaciar_carrito', methods: ['POST'])]
+    public function vaciarCarrito(
+        EntityManagerInterface $em,
+        Security $security
+    ): Response {
+        $usuario = $security->getUser();
+
+        if (!$usuario) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $pedido = $em->getRepository(PedidoCliente::class)->findOneBy([
+            'usuario' => $usuario,
+            'estado' => PedidoCliente::ESTADO_CARRITO,
+        ]);
+
+        if ($pedido) {
+            foreach ($pedido->getDetallePedidoClientes() as $detalle) {
+                $em->remove($detalle);
+            }
+
+            $pedido->setTotal(0);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('mostrar_carrito');
+}
+
+
 }

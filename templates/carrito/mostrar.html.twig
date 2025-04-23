@@ -37,9 +37,13 @@
                     </td>
                 </tr>
             {% endfor %}
+           
         </tbody>
     </table>
     <p><strong>Total:</strong> {{ pedido.total }}€</p>
+    <form action="{{ path('vaciar_carrito') }}" method="post" onsubmit="return confirm('¿Estás seguro de que quieres vaciar el carrito?');">
+        <button type="submit">Vaciar carrito</button>
+    </form>
 {% endif %}
 
 <a href="{{ path('app_categorias') }}">Seguir comprando</a>
