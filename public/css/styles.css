@@ -1,0 +1,39 @@
+/* Estilos generales */
+/* Variables de color */
+:root {
+    --verde-principal: #7BC043;
+    --verde-oscuro: #2E7D32;
+    --verde-fondo: #DFF6DD;
+    --gris-suave: #F5F5F5;
+    --tierra: #A68A64;
+    --lima-suave: #F0F9E8;
+}
+
+body {
+    background-color: var(--verde-fondo);
+    color: #333;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Estilos reutilizables */
+.btn-verde {
+    background-color: var(--verde-principal);
+    color: white;
+    border: none;
+}
+
+.btn-verde:hover {
+    background-color: var(--verde-oscuro);
+}
+
+.bg-suave {
+    background-color: var(--gris-suave);
+}
+
+.titulo-verde {
+    color: var(--verde-principal);
+}
+
+.borde-redondeado {
+    border-radius: 8px;
+}
