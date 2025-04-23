@@ -15,6 +15,7 @@ final class ProductosController extends AbstractController{
     {
         return $this->render('producto/index.html.twig', [
             'producto' => $producto,
+            'fotos' => $producto->getFotoProductos(),
         ]);
     }
 
