@@ -24,6 +24,17 @@
                     <td>{{ detalle.precioUnitario }}€</td>
                     <td>{{ detalle.cantidad }}</td>
                     <td>{{ detalle.precioUnitario * detalle.cantidad }}€</td>
+                    <td>
+                         <form method="post" action="{{ path('modificar_cantidad_carrito', { id: detalle.id }) }}">
+                            <input type="number" name="cantidad" value="{{ detalle.cantidad }}" min="1">
+                            <button type="submit">Actualizar cantidad</button>
+                        </form> 
+                    </td>
+                    <td> 
+                        <form method="post" action="{{ path('eliminar_del_carrito', { id: detalle.id }) }}">
+                            <button type="submit">Eliminar</button>
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

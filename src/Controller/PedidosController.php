@@ -107,4 +107,39 @@ final class PedidosController extends AbstractController
         ]);
     }
 
+    //Funcion para modificar la cantidad de un producto en el carrito
+    #[Route('/carrito/modificar/{id}', name: 'modificar_cantidad_carrito', methods: ['POST'])]
+    public function modificarCantidad(
+        DetallePedidoCliente $detalle,
+        Request $request,
+        EntityManagerInterface $em
+    ): Response {
+        $cantidad = max((int) $request->request->get('cantidad'), 1);
+        $diferencia = $cantidad - $detalle->getCantidad();
+        $detalle->setCantidad($cantidad);
+
+        // Actualiza el total del pedido
+        $pedido = $detalle->getPedidoCliente();
+        $pedido->setTotal($pedido->getTotal() + ($diferencia * $detalle->getPrecioUnitario()));
+
+        $em->flush();
+
+        return $this->redirectToRoute('mostrar_carrito');
+    }
+
+    //Funcion para eliminar un producto del carrito
+    #[Route('/carrito/eliminar/{id}', name: 'eliminar_del_carrito', methods: ['POST'])]
+    public function eliminarDelCarrito(
+        DetallePedidoCliente $detalle,
+        EntityManagerInterface $em
+    ): Response {
+        $pedido = $detalle->getPedidoCliente();
+        $pedido->setTotal($pedido->getTotal() - ($detalle->getCantidad() * $detalle->getPrecioUnitario()));
+
+        $em->remove($detalle);
+        $em->flush();
+
+        return $this->redirectToRoute('mostrar_carrito');
+    }
+
 }
