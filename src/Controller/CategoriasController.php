@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Categoria;
+use App\Entity\Producto;
 use App\Repository\CategoriaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,11 +31,18 @@ final class CategoriasController extends AbstractController
             throw $this->createNotFoundException('Categoría no encontrada');
         }
 
-        $productos = $categoria->getProductos(); 
+        $productos = $categoria->getProductos();
+        $fotosPorProducto = [];
+
+        foreach ($productos as $producto) {
+            $foto = $producto->getFotoProductos()->first();
+            $fotosPorProducto[$producto->getId()] = $foto;
+        }
 
         return $this->render('categorias/productos.html.twig', [
             'categoria' => $categoria,
             'productos' => $productos,
+            'fotosPorProducto' => $fotosPorProducto
         ]);
     }
 
