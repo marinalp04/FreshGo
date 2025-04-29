@@ -21,6 +21,9 @@
                             </div>
                             <div class="card-body text-center">
                                 <h5 class="card-title text-success">{{ categoria.nombre }}</h5>
+                                <p class="card-text text-muted categoria-descripcion">
+                                    {{ categoria.descripcion|slice(0, 100) ~ '...' }}
+                                </p>
                             </div>
                         </div>
                     </a>
