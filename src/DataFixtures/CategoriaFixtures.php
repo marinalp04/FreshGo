@@ -13,10 +13,14 @@ class CategoriaFixtures extends Fixture
         
         $categoria1 = new Categoria();
         $categoria1->setNombre('Platos vegetarianos');
+        $categoria1->setDescripcion('Platos a base de ingredientes vegetales, ideales para vegetarianos y veganos.');
+        $categoria1->setFoto('vegetarianos.jpg');
         $manager->persist($categoria1);
 
         $categoria2 = new Categoria();
         $categoria2->setNombre('Platos proteicos');
+        $categoria2->setDescripcion('Platos ricos en proteínas, ideales para quienes buscan aumentar su masa muscular.');
+        $categoria2->setFoto('proteicos.jpg');
         $manager->persist($categoria2);
 
         

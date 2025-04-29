@@ -1,14 +1,10 @@
 {# templates/partials/navbar.html.twig #}
-<style>
-  .bg-verde-claro {
-    background-color: #d4edda !important;
-  }
+{# Este es el archivo de la barra de navegación que se incluye en todas las páginas #}
+{# Se utiliza Bootstrap para el diseño y la estructura #}
 
-  .navbar-nav .nav-item {
-    margin: 0 15px;
-  }
-</style>
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+{% endblock %}
 <nav class="navbar navbar-expand-lg bg-verde-claro">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Fresh&Go</a>
