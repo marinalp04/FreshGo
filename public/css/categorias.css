@@ -1,0 +1,22 @@
+
+.categoria-card {
+    border: 1px solid #e0f2e9;
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.categoria-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 16px rgba(0, 128, 0, 0.1);
+}
+
+.categoria-card img {
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid #e0f2e9;
+}
+
+.card-title {
+    font-weight: 600;
+}
