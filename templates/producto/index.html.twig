@@ -19,7 +19,7 @@
                         <div class="carousel-inner rounded shadow-sm">
                             {% for foto in fotos %}
                                 <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                    <img src="{{ asset('uploads/fotos_productos/' ~ foto.foto) }}" class="d-block w-100 " alt="Foto {{ loop.index }}">
+                                    <img src="{{ asset('uploads/fotos_productos/' ~ foto.foto) }}" class="carousel-foto d-block w-100" alt="Foto {{ loop.index }}">
                                 </div>
                             {% endfor %}
                         </div>
