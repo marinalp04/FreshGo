@@ -2,12 +2,19 @@
 
 {% block title %}Página Principal{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+{% endblock %}
+
 {% block content %}
-    <h1>Bienvenido a Fresh&Go</h1>
-    <h3>Tu plataforma de comida saludable</h3>
-    <p>Explora nuestras
-        <a class="" href="{{ path('app_categorias') }}">categorías</a>
-     y descubre deliciosas recetas.</p>
+    <section class="hero-freshgo d-flex align-items-center text-center text-white">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Bienvenido a Fresh&Go</h1>
+            <p class="lead">Comida saludable, lista para ti</p>
+            <a href="{{ path('app_categorias') }}" class="btn btn-success btn-lg mt-3">Explorar categorías</a>
+        </div>
+    </section>
     
 {% endblock %}
 

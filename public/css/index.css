@@ -1,0 +1,12 @@
+.hero-freshgo {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('/images/hero.jpg') no-repeat center center;
+    background-size: cover;
+    height: 90vh;
+    padding: 0 1rem;
+}
+
+.hero-freshgo h1,
+.hero-freshgo p {
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+}
