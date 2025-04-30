@@ -30,6 +30,9 @@ class Categoria
     #[ORM\Column(length: 500)]
     private ?string $descripcion = null;
 
+    #[ORM\Column]
+    private ?bool $destacada = null;
+
     public function __construct()
     {
         $this->productos = new ArrayCollection();
@@ -102,6 +105,18 @@ class Categoria
     public function setDescripcion(string $descripcion): static
     {
         $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    public function isDestacada(): ?bool
+    {
+        return $this->destacada;
+    }
+
+    public function setDestacada(bool $destacada): static
+    {
+        $this->destacada = $destacada;
 
         return $this;
     }
