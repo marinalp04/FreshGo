@@ -1,3 +1,4 @@
+/* Seccion 1 */
 .hero-freshgo {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
                 url('/images/hero.jpg') no-repeat center center;
@@ -10,3 +11,15 @@
 .hero-freshgo p {
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
 }
+/* Seccion 2 */
+.beneficio-icon {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.beneficio-icon:hover {
+    transform: scale(1.1);
+}
+
