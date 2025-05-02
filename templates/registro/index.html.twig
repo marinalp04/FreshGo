@@ -2,26 +2,42 @@
 
 {% block title %}Registro{% endblock %}
 
-{% block content %}
-    <h1>Registro</h1>
-
-    {{ form_start(form, {'attr': {'id': 'form-registro'}}) }}
-
-    {# Mostrar errores generales del formulario #}
-    {{ form_errors(form) }}
-
-    {% for field in form %}
-        {% if field.vars.name != '_token' and field.vars.name != 'submit' %}
-            <div class="form-group">
-                {{ form_label(field) }}
-                {{ form_widget(field) }}
-                <div class="mensaje-error" id="error-{{ field.vars.id }}"></div>
-            </div>
-        {% endif %}
-    {% endfor %}
-
-    
-    {{ form_end(form) }}
-    <script src="{{ asset('js/registro.js') }}"></script>
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 {% endblock %}
+
+{% block content %}
+<div class="login-container d-flex justify-content-center align-items-center">
+    <div class="card login-card shadow p-4">
+        <div class="text-center mb-3">
+            <img src="{{ asset('images/logo.png') }}" alt="Fresh&Go Logo" class="logo-login mb-2">
+            <h2 class="text-success">Crea tu cuenta</h2>
+        </div>
+
+        {{ form_start(form, {'attr': {'id': 'form-registro'}}) }}
+
+        {{ form_errors(form) }}
+
+        {% for field in form %}
+            {% if field.vars.name != '_token' and field.vars.name != 'submit' %}
+                <div class="mb-3">
+                    {{ form_label(field, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(field, {'attr': {'class': 'form-control'}}) }}
+                    <div class="mensaje-error" id="error-{{ field.vars.id }}"></div>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <div class="d-grid">
+            {{ form_widget(form.submit, {'attr': {'class': 'btn btn-success'}}) }}
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+</div>
+
+<script src="{{ asset('js/registro.js') }}"></script>
+{% endblock %}
+
 
