@@ -1,46 +1,53 @@
 {# templates/partials/navbar.html.twig #}
 {# Este es el archivo de la barra de navegación que se incluye en todas las páginas #}
-{# Se utiliza Bootstrap para el diseño y la estructura #}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
 {% endblock %}
-<nav class="navbar navbar-expand-lg bg-verde-claro">
+
+<nav class="navbar navbar-expand-lg bg-verde-claro py-3">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Fresh&Go</a>
+    <a class="navbar-brand fw-bold text-success" href="{{ path('app_home') }}">Fresh&Go</a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarNav" aria-controls="navbarNav"
+            data-bs-target="#navbarContent" aria-controls="navbarContent"
             aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-      <ul class="navbar-nav">
+    <div class="collapse navbar-collapse justify-content-between" id="navbarContent">
+      <!-- Menú central -->
+      <ul class="navbar-nav mx-auto">
         <li class="nav-item">
-          <a class="nav-link active" href="{{ path('app_home') }}">Inicio</a>
+          <a class="navbar-link color-verde" href="{{ path('app_home') }}">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ path('app_categorias') }}">Categorías</a>
+          <a class="navbar-link color-verde" href="{{ path('app_categorias') }}">Categorías</a>
         </li>
-        {# Para mostrar el usuario, o iniciar sesion #}
         {% if app.user %}
-                <li class="nav-item nav-link">Bienvenido, {{ app.user.email }}</li>
-                 <li>
-                  <a class="nav-link" href="{{ path('mostrar_carrito') }}">Carrito</a>
-                </li> 
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ path('app_logout') }}">Cerrar sesión</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ path('app_login') }}">Iniciar sesión</a> 
-                </li>
-                <li>
-                  <a class="nav-link" href="{{ path('app_registro') }}">Registrarse</a>
-                </li> 
-               
-            {% endif %}
+          <li class="nav-item">
+            <a class="navbar-link color-verde" href="{{ path('mostrar_carrito') }}">Carrito</a>
+          </li>
+        {% endif %}
+      </ul>
+
+      <!-- Login / Usuario -->
+      <ul class="navbar-nav align-items-center">
+        {% if app.user %}
+            <li class="nav-item">
+                <span class=" text-success fw-semibold">Hola, {{ app.user.email }}</span>
+            </li>
+            <li class="nav-item">
+                <a class=" btn btn-sm btn-outline-danger ms-2" href="{{ path('app_logout') }}">Cerrar sesión</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class=" btn btn-sm btn-outline-primary me-2" href="{{ path('app_login') }}">Iniciar sesión</a>
+            </li>
+            <li class="nav-item">
+                <a class=" btn btn-sm btn-success" href="{{ path('app_registro') }}">Registrarse</a>
+            </li>
+        {% endif %}
       </ul>
     </div>
   </div>
