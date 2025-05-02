@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Categoria;
+use App\Entity\Producto;
 use App\Repository\CategoriaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,21 +22,28 @@ final class CategoriasController extends AbstractController
         ]);
     }
 
-    // #[Route('/categoria/{id}', name: 'app_categoria')]
-    // public function productosPorCategoria(int $id, CategoriaRepository $categoriaRepo): Response
-    // {
-    //     $categoria = $categoriaRepo->find($id);
+    #[Route('/categoria/{id}', name: 'categoria_productos')]
+    public function productosPorCategoria(int $id, CategoriaRepository $categoriaRepo): Response
+    {
+        $categoria = $categoriaRepo->find($id);
 
-    //     if (!$categoria) {
-    //         throw $this->createNotFoundException('Categoría no encontrada');
-    //     }
+        if (!$categoria) {
+            throw $this->createNotFoundException('Categoría no encontrada');
+        }
 
-    //     $productos = $categoria->getProductos(); 
+        $productos = $categoria->getProductos();
+        $fotosPorProducto = [];
 
-    //     return $this->render('categoria/productos.html.twig', [
-    //         'categoria' => $categoria,
-    //         'productos' => $productos,
-    //     ]);
-    // }
+        foreach ($productos as $producto) {
+            $foto = $producto->getFotoProductos()->first();
+            $fotosPorProducto[$producto->getId()] = $foto;
+        }
+
+        return $this->render('categorias/productos.html.twig', [
+            'categoria' => $categoria,
+            'productos' => $productos,
+            'fotosPorProducto' => $fotosPorProducto
+        ]);
+    }
 
 }

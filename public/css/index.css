@@ -1,0 +1,52 @@
+/* Seccion 1 */
+.hero-freshgo {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('/images/hero.jpg') no-repeat center center;
+    background-size: cover;
+    height: 90vh;
+    padding: 0 1rem;
+}
+
+.hero-freshgo h1,
+.hero-freshgo p {
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+}
+/* Seccion 2 */
+.beneficio-icon {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.beneficio-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Seccion 3 */
+.categoria-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.categoria-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.categoria-imagen {
+    height: 180px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f1f8e9;
+}
+
+.categoria-imagen img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+

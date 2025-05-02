@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/producto.css') }}">
+{% endblock %}
+
+{% block title %}{{ producto.nombre }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="producto-container p-4 rounded shadow-sm bg-light">
+
+        <div class="row">
+            {# Carrusel de fotos #}
+            <div class="col-md-6">
+                {% if fotos is not empty %}
+                    <div id="carouselFotos" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner rounded shadow-sm">
+                            {% for foto in fotos %}
+                                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                    <img src="{{ asset('uploads/fotos_productos/' ~ foto.foto) }}" class="carousel-foto d-block w-100" alt="Foto {{ loop.index }}">
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselFotos" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Anterior</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselFotos" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Siguiente</span>
+                        </button>
+                    </div>
+                {% else %}
+                    <p>No hay imágenes disponibles.</p>
+                {% endif %}
+            </div>
+
+            {# Información del producto #}
+            <div class="col-md-6">
+                <h1 class="producto-titulo mb-3">{{ producto.nombre }}</h1>
+                <p class="producto-precio h4 mb-2">Precio: {{ producto.precio }}€</p>
+                <p class="producto-descripcion mb-4">Descripción: {{ producto.descripcion }}</p>
+
+                <form action="{{ path('anadir_al_carrito', { id: producto.id }) }}" method="post" class="producto-form mb-4">
+                    {% if app.user %}
+                        <div class="d-flex flex-column flex-md-row align-items-start gap-2">
+                            <div>
+                                <label for="cantidad" class="form-label fw-semibold">Cantidad:</label>
+                                <input type="number" id="cantidad" name="cantidad" value="1" min="1" class="form-control w-auto">
+                            </div>
+                            <button type="submit" class="btn btn-success mt-2 mt-md-4">Añadir al carrito</button>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning mt-3">
+                            <a href="{{ path('app_login', { redirectTo: path('producto_detalle', { id: producto.id }) }) }}" class="alert-link">
+                                Inicia sesión para añadir al carrito
+                            </a>
+                        </div>
+                        <p>¿No tienes cuenta?
+                            <a href="{{ path('app_registro', { redirectTo: path('producto_detalle', { id: producto.id }) }) }}">
+                                Regístrate aquí
+                            </a>
+                        </p>
+                    {% endif %}
+                </form>
+
+                <a href="{{ path('categoria_productos', {'id': producto.categoria.id}) }}" class="btn btn-outline-success">
+                    ← Volver a la categoría
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

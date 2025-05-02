@@ -24,6 +24,15 @@ class Categoria
     #[ORM\OneToMany(targetEntity: Producto::class, mappedBy: 'categoria')]
     private Collection $productos;
 
+    #[ORM\Column(length: 255)]
+    private ?string $foto = null;
+
+    #[ORM\Column(length: 500)]
+    private ?string $descripcion = null;
+
+    #[ORM\Column]
+    private ?bool $destacada = null;
+
     public function __construct()
     {
         $this->productos = new ArrayCollection();
@@ -72,6 +81,42 @@ class Categoria
                 $producto->setCategoria(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFoto(): ?string
+    {
+        return $this->foto;
+    }
+
+    public function setFoto(string $foto): static
+    {
+        $this->foto = $foto;
+
+        return $this;
+    }
+
+    public function getDescripcion(): ?string
+    {
+        return $this->descripcion;
+    }
+
+    public function setDescripcion(string $descripcion): static
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    public function isDestacada(): ?bool
+    {
+        return $this->destacada;
+    }
+
+    public function setDestacada(bool $destacada): static
+    {
+        $this->destacada = $destacada;
 
         return $this;
     }

@@ -11,6 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: PedidoClienteRepository::class)]
 class PedidoCliente
 {
+    public const ESTADO_CARRITO = 'carrito';
+    public const ESTADO_CONFIRMADO = 'confirmado';
+    public const ESTADO_EN_PROCESO = 'en_proceso';
+    public const ESTADO_ENTREGADO = 'entregado';
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -21,7 +27,7 @@ class PedidoCliente
     private ?Usuario $usuario = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $fecha = null;
+    private ?\DateTimeInterface $fecha_creacion = null;
 
     #[ORM\Column]
     private ?float $total = null;
@@ -31,6 +37,12 @@ class PedidoCliente
      */
     #[ORM\OneToMany(targetEntity: DetallePedidoCliente::class, mappedBy: 'pedido_cliente')]
     private Collection $detallePedidoClientes;
+
+    #[ORM\Column(length: 255)]
+    private ?string $estado = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $fecha_confirmacion = null;
 
     public function __construct()
     {
@@ -54,14 +66,14 @@ class PedidoCliente
         return $this;
     }
 
-    public function getFecha(): ?\DateTimeInterface
+    public function getFechaCreacion(): ?\DateTimeInterface
     {
-        return $this->fecha;
+        return $this->fecha_creacion;
     }
 
-    public function setFecha(\DateTimeInterface $fecha): static
+    public function setFechaCreacion(\DateTimeInterface $fecha_creacion): static
     {
-        $this->fecha = $fecha;
+        $this->fecha_creacion = $fecha_creacion;
 
         return $this;
     }
@@ -104,6 +116,30 @@ class PedidoCliente
                 $detallePedidoCliente->setPedidoCliente(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEstado(): ?string
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(string $estado): static
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    public function getFechaConfirmacion(): ?\DateTimeInterface
+    {
+        return $this->fecha_confirmacion;
+    }
+
+    public function setFechaConfirmacion(?\DateTimeInterface $fecha_confirmacion): static
+    {
+        $this->fecha_confirmacion = $fecha_confirmacion;
 
         return $this;
     }

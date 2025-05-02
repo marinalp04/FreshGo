@@ -1,0 +1,53 @@
+/* Estilo general de las tarjetas de productos */
+.producto-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.producto-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Imagen de producto */
+.producto-imagen img {
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+/* Título y descripción */
+.producto-card .card-body {
+    padding: 15px;
+}
+
+.producto-card .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2e7d32;
+}
+
+.producto-card .card-text {
+    font-size: 1rem;
+    color: #555;
+}
+
+.producto-card .h5 {
+    font-size: 1.1rem;
+    color: #388e3c;
+}
+
+/* Para ajustar las tarjetas y hacerlas más homogéneas */
+.row .col-12,
+.row .col-sm-6,
+.row .col-md-4,
+.row .col-lg-3 {
+    display: flex;
+    justify-content: center;
+}

@@ -239,5 +239,9 @@ class Producto
         return $this;
     }
 
-    
+    public function getPrimeraFoto(): ?FotoProducto
+    {
+        return $this->getFotoProductos()->first() ?: null;
+    }
+
 }

@@ -1,16 +1,39 @@
-{# templates/categorias/index.html.twig #}
 {% extends 'base.html.twig' %}
-
 
 {% block title %}Categorías{% endblock %}
 
-{% block content %}
-    <h1>Categorías</h1>
-    <ul>
-        {% for categoria in categorias %}
-            <li>{{ categoria.nombre }}</li>
-        {% else %}
-            <li>No hay categorías disponibles.</li>
-        {% endfor %}
-    </ul>
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/categorias.css') }}">
 {% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="text-center text-success mb-4">Nuestras Categorías</h1>
+
+        <div class="row g-4 justify-content-center">
+            {% for categoria in categorias %}
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <a href="{{ path('categoria_productos', {'id': categoria.id}) }}" class="text-decoration-none">
+                        <div class="card categoria-card h-100 shadow-sm">
+                            <div class="categoria-imagen">
+                                <img src="{{ asset('uploads/fotos_categorias/' ~ categoria.foto) }}" class="card-img-top" alt="Imagen de {{ categoria.nombre }}">
+                            </div>
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-success">{{ categoria.nombre }}</h5>
+                                <p class="card-text text-muted categoria-descripcion">
+                                    {{ categoria.descripcion|slice(0, 100) ~ '...' }}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% else %}
+                <div class="col-12 text-center">
+                    <p>No hay categorías disponibles.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+

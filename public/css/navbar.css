@@ -1,0 +1,38 @@
+.bg-verde-claro {
+  background-color: #e8f5e9; 
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+}
+
+.navbar-link {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #2e7d32;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.navbar-link:hover {
+  color: #1b5e20;
+  background-color: rgba(46, 125, 50, 0.1);
+  border-radius: 0.25rem;
+}
+
+
+.navbar-toggler {
+  border-color: #2e7d32;
+}
+
+/* Para la parte derecha del navbar */
+.navbar .btn {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.navbar .btn:hover {
+  transform: scale(1.05);
+}

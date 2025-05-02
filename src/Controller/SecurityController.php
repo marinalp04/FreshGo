@@ -73,6 +73,7 @@ final class SecurityController extends AbstractController
                 $authenticator,
                 $request
             );
+          
         }
     
         return $this->render('registro/index.html.twig', [
@@ -81,17 +82,21 @@ final class SecurityController extends AbstractController
     }
 
     #[Route(path: '/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(Request $request, AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
+         // Guardar redirectTo si viene en la URL
+        $redirectTo = $request->query->get('redirectTo');
+        if ($redirectTo) {
+            $request->getSession()->set('_target_path', $redirectTo);
+        }
+        
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-
+        
+        
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 

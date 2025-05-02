@@ -14,13 +14,18 @@ class FotoProductoFixtures extends Fixture implements DependentFixtureInterface
     {
         $foto_producto1 = new FotoProducto();
         $foto_producto1->setProducto($this->getReference('producto1', Producto::class));
-        $foto_producto1->setFoto('foto1.jpg');
+        $foto_producto1->setFoto('ensalada_cesar1.jpg');
         $manager->persist($foto_producto1);
 
         $foto_producto2 = new FotoProducto();
-        $foto_producto2->setProducto($this->getReference('producto2', Producto::class));
-        $foto_producto2->setFoto('foto2.jpg');
+        $foto_producto2->setProducto($this->getReference('producto1', Producto::class));
+        $foto_producto2->setFoto('ensalada_cesar2.jpg');
         $manager->persist($foto_producto2);
+
+        $foto_producto3 = new FotoProducto();
+        $foto_producto3->setProducto($this->getReference('producto1', Producto::class));
+        $foto_producto3->setFoto('ensalada_cesar3.jpg');
+        $manager->persist($foto_producto3);
 
 
         $manager->flush();
