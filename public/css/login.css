@@ -1,0 +1,26 @@
+
+body {
+    /* background: linear-gradient(to bottom right, #e8f5e9, #a5d6a7);*/
+  background: url('../images/fondo-login.jpg') no-repeat center center fixed;
+  background-size: cover; 
+  min-height: 100vh;
+}
+  
+
+.login-container {
+  min-height: 100vh;
+}
+
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.logo-login {
+  max-width: 120px;
+  height: auto;
+}
+  
