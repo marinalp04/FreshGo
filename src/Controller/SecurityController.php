@@ -17,28 +17,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class SecurityController extends AbstractController
 {
-    public function __construct(private UserPasswordHasherInterface $passwordHasher) {
+    public function __construct() {
         // Constructor
     }
-    // #[Route('/login', name: 'app_login')]
-    // public function loginBackup(Request $request, AuthenticationUtils $authenticationUtils): Response
-    // {
-    //     // Obtiene el último nombre de usuario y el error de autenticación
-    //     $lastUsername = $authenticationUtils->getLastUsername();
-    //     $error = $authenticationUtils->getLastAuthenticationError();
-
-    //     // Cambiar la ruta del archivo Twig
-    //     return $this->render('login/index.html.twig', [
-    //         'last_username' => $lastUsername,
-    //         'error' => $error,
-    //     ]);
-    // }
-
-    // #[Route('/logout', name: 'app_logout')]
-    // public function logoutBackup(): void
-    // {
-    //     throw new \Exception('No debería ejecutarse este código.');
-    // }
 
     #[Route('/registro', name: 'app_registro')]
     public function registro(

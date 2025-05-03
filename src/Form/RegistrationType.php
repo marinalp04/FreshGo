@@ -28,22 +28,26 @@ class RegistrationType extends AbstractType
                 ],
             ])
             ->add('email', EmailType::class, [
+                'label' => 'Correo electrónico',
                 'constraints' => [
                     new NotBlank(['message' => 'El email no puede estar vacío.']),
                     new Email(['message' => 'Por favor, ingrese un email válido.']),
                 ],
             ])
             ->add('password', PasswordType::class, [
+                'label' => 'Contraseña',
                 'constraints' => [
                     new NotBlank(['message' => 'La contraseña no puede estar vacía.']),
                 ],
             ])
             ->add('direccion', TextType::class, [
+                'label' => 'Dirección',
                 'constraints' => [
                     new NotBlank(['message' => 'La dirección no puede estar vacía.']),
                 ],
             ])
             ->add('telefono', TextType::class, [
+                'label' => 'Teléfono',
                 'constraints' => [
                     new NotBlank(['message' => 'El teléfono no puede estar vacío.']),
                 ],
