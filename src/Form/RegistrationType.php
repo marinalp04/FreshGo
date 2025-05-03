@@ -34,12 +34,6 @@ class RegistrationType extends AbstractType
                     new Email(['message' => 'Por favor, ingrese un email válido.']),
                 ],
             ])
-            ->add('password', PasswordType::class, [
-                'label' => 'Contraseña',
-                'constraints' => [
-                    new NotBlank(['message' => 'La contraseña no puede estar vacía.']),
-                ],
-            ])
             ->add('direccion', TextType::class, [
                 'label' => 'Dirección',
                 'constraints' => [
@@ -51,6 +45,20 @@ class RegistrationType extends AbstractType
                 'constraints' => [
                     new NotBlank(['message' => 'El teléfono no puede estar vacío.']),
                 ],
+            ])
+            ->add('password', PasswordType::class, [
+                'label' => 'Contraseña',
+                'constraints' => [
+                    new NotBlank(['message' => 'La contraseña no puede estar vacía.']),
+                ],
+            ])
+            ->add('confirmPassword', PasswordType::class, [
+                'label' => 'Confirmar contraseña',
+                'mapped' => false,
+                'constraints' => [
+                    new NotBlank(['message' => 'La confirmación de contraseña no puede estar vacía.']),
+                ],
+                'attr' => ['id' => 'confirmPassword'],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Registrarse',

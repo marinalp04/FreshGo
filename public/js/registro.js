@@ -26,13 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         {
-            id: 'registration_contrasena',
-            validar: function (valor) {
-                if (valor.trim() === '') return 'La contraseña no puede estar vacía.';
-                return '';
-            }
-        },
-        {
             id: 'registration_direccion',
             validar: function (valor) {
                 if (valor.trim() === '') return 'La dirección no puede estar vacía.';
@@ -45,6 +38,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 const telRegex = /^[0-9]{9}$/;
                 if (valor.trim() === '') return 'El teléfono no puede estar vacío.';
                 if (!telRegex.test(valor)) return 'Debe ser un número de 9 cifras.';
+                return '';
+            }
+        },
+        {
+            id: 'registration_password',
+            validar: function (valor) {
+                if (valor.trim() === '') return 'La contraseña no puede estar vacía.';
+                return '';
+            }
+        },
+        {
+            id: 'registration_confirmPassword',
+            validar: function (valor) {
+                const password = document.getElementById('registration_password').value;
+                if (valor.trim() === '') return 'La confirmación de contraseña no puede estar vacía.';
+                if (valor !== password) return 'Las contraseñas no coinciden.';
                 return '';
             }
         }
