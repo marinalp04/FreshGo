@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('form-registro');
+    const boton = document.getElementById('registration_submit');
 
+    //Validaciones en tiempo real
     const campos = [
         {
             id: 'registration_nombre',
@@ -71,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    //Validación al enviar el formulario
     form.addEventListener('submit', function (e) {
         let esValido = true;
 
@@ -90,6 +93,10 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!esValido) {
             e.preventDefault();
             alert('Corrige los errores antes de enviar el formulario.');
+        }else {
+            //Para desactivar el boton de submit y mostrar el spinner
+            boton.disabled = true;
+            boton.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Registrando...';
         }
     });
 });
