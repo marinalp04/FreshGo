@@ -27,11 +27,15 @@
                 <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
             </div>
 
-            <div class="mb-3">
+           <div class="mb-3 position-relative">
                 <label for="inputPassword" class="form-label">Contraseña</label>
-                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                <div class="input-group">
+                    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                    <button type="button" class="btn btn-outline-secondary" id="togglePassword" tabindex="-1">
+                        <i class="bi bi-eye" id="iconPassword"></i>
+                    </button>
+                </div>
             </div>
-
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
             <div class="d-grid">
