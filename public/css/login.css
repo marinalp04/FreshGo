@@ -23,4 +23,16 @@ body {
   max-width: 120px;
   height: auto;
 }
+
+.input-group .form-control {
+  border-right: 0;
+}
+
+.input-group .btn.toggle-password {
+  border-left: 0;
+}
+
+.mensaje-error {
+  margin-top: 0.25rem;
+}
   

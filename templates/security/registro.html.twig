@@ -21,9 +21,22 @@
 
         {% for field in form %}
             {% if field.vars.name != '_token' and field.vars.name != 'submit' %}
-                <div class="mb-3">
+                <div class="mb-3 position-relative">
                     {{ form_label(field, null, {'label_attr': {'class': 'form-label'}}) }}
-                    {{ form_widget(field, {'attr': {'class': 'form-control'}}) }}
+
+                    {% if field.vars.name == 'password' or field.vars.name == 'confirmPassword' %}
+                            <div class="input-group">
+                                {{ form_widget(field, {'attr': {'class': 'form-control'}}) }}
+                                <button type="button"
+                                        class="btn btn-outline-secondary toggle-password"
+                                        data-target="#{{ field.vars.id }}">
+                                    <i class="bi bi-eye" id="icon-{{ field.vars.id }}"></i>
+                                </button>
+                            </div>
+                        {% else %}
+                            {{ form_widget(field, {'attr': {'class': 'form-control'}}) }}
+                        {% endif %}
+                        
                     <div class="mensaje-error" id="error-{{ field.vars.id }}"></div>
                 </div>
             {% endif %}

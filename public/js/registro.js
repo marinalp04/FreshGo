@@ -99,5 +99,20 @@ document.addEventListener('DOMContentLoaded', function () {
             boton.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Registrando...';
         }
     });
+
+    // Mostrar/Ocultar contraseña
+    document.querySelectorAll('.toggle-password').forEach(button => {
+        button.addEventListener('click', function () {
+            const targetSelector = this.getAttribute('data-target');
+            const passwordInput = document.querySelector(targetSelector);
+            const icon = this.querySelector('i');
+
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+
+            icon.classList.toggle('bi-eye');
+            icon.classList.toggle('bi-eye-slash');
+        });
+    });
 });
 
