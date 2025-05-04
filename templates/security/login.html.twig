@@ -19,7 +19,7 @@
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
-        <form method="post">
+        <form method="post" id="form-login">
             <div class="mb-3">
                 <label for="inputEmail" class="form-label">Correo electrónico</label>
                 <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
@@ -33,10 +33,16 @@
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
             <div class="d-grid">
-                <button class="btn btn-success" type="submit">Entrar</button>
+                <button class="btn btn-success" id="login_submit" type="submit">Entrar</button>
             </div>
         </form>
     </div>
 </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/login.js') }}"></script>
+{% endblock %}
+
 

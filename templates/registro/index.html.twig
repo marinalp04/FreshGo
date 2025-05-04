@@ -36,8 +36,12 @@
         {{ form_end(form) }}
     </div>
 </div>
-
-<script src="{{ asset('js/registro.js') }}"></script>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/registro.js') }}"></script>
+{% endblock %}
+
 
 
