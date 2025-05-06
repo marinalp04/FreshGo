@@ -40,14 +40,14 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $telefono = null;
 
-    #[ORM\Column]
-    private ?int $rol = null;
-
     /**
      * @var Collection<int, PedidoCliente>
      */
     #[ORM\OneToMany(targetEntity: PedidoCliente::class, mappedBy: 'usuario')]
     private Collection $pedidoClientes;
+
+    #[ORM\Column]
+    private array $roles = [];
 
     public function __construct()
     {
@@ -133,18 +133,6 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRol(): ?int
-    {
-        return $this->rol;
-    }
-
-    public function setRol(int $rol): static
-    {
-        $this->rol = $rol;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, PedidoCliente>
      */
@@ -181,15 +169,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
      {
          return (string) $this->email;
      }
- 
-     public function getRoles(): array
-     {  
-         // Devuelve un array de roles, por ahora no lo necesito
-         return ['ROLE_USER'];
-     }
- 
-     
- 
+
      public function getSalt(): ?string
      {
         //No lo necesito por ahora
@@ -199,6 +179,22 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
      public function eraseCredentials(): void
      {
          // Borra cualquier dato sensible como contraseñas sin cifrar, no lo necesito por ahora
+     }
+
+     public function getRoles(): array
+    {
+        $roles = $this->roles;
+
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+     public function setRoles(array $roles): static
+     {
+         $this->roles = $roles;
+
+         return $this;
      }
     
 }
