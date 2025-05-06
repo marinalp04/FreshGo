@@ -26,4 +26,4 @@ security:
     - { path: ^/login, roles: PUBLIC_ACCESS }
     - { path: ^/registro, roles: PUBLIC_ACCESS }  # Ruta de registro accesible sin autenticación
     - { path: ^/$, roles: PUBLIC_ACCESS } # Permitir acceso a la página principal
-    - { path: ^/dashboard, roles: ROLE_USER } # Protege las páginas privadas
+    - { path: ^/admin, roles: ROLE_ADMIN } # Protege las páginas de admin
