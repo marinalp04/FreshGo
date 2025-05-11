@@ -24,6 +24,9 @@ class Producto
     #[ORM\Column]
     private ?float $precio = null;
 
+    #[ORM\OneToMany(mappedBy: 'producto', targetEntity: FotoProducto::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $fotos;
+
     
 
     #[ORM\ManyToOne(inversedBy: 'productos')]
@@ -60,6 +63,7 @@ class Producto
         $this->detallePedidoProveedors = new ArrayCollection();
         $this->composicionProductos = new ArrayCollection();
         $this->fotoProductos = new ArrayCollection();
+        $this->fotos = new ArrayCollection();
     }
 
     
@@ -242,6 +246,32 @@ class Producto
     public function getPrimeraFoto(): ?FotoProducto
     {
         return $this->getFotoProductos()->first() ?: null;
+    }
+
+    public function getFotos(): Collection
+    {
+        return $this->fotos;
+    }
+
+    public function addFoto(FotoProducto $foto): self
+    {
+        if (!$this->fotos->contains($foto)) {
+            $this->fotos[] = $foto;
+            $foto->setProducto($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFoto(FotoProducto $foto): self
+    {
+        if ($this->fotos->removeElement($foto)) {
+            if ($foto->getProducto() === $this) {
+                $foto->setProducto(null);
+            }
+        }
+
+        return $this;
     }
 
 }

@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\FotoProductoRepository;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FotoProductoRepository::class)]
+#[Vich\Uploadable]
 class FotoProducto
 {
     #[ORM\Id]
@@ -19,6 +22,12 @@ class FotoProducto
 
     #[ORM\Column(length: 255)]
     private ?string $foto = null;
+
+    #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'foto')]
+    private ?File $fotoFile = null;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
 
     public function getId(): ?int
     {
@@ -42,10 +51,29 @@ class FotoProducto
         return $this->foto;
     }
 
-    public function setFoto(string $foto): static
+    public function setFoto(?string $foto): static
     {
         $this->foto = $foto;
 
         return $this;
+    }
+
+    public function setFotoFile(?File $fotoFile = null): void
+    {
+        $this->fotoFile = $fotoFile;
+
+        if ($fotoFile !== null) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getFotoFile(): ?File
+    {
+        return $this->fotoFile;
+    }
+
+    public function __toString(): string
+    {
+        return $this->foto ?? 'Sin imagen';
     }
 }
