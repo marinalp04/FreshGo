@@ -26,7 +26,9 @@ class ProductoCrudController extends AbstractCrudController
         return [
             TextField::new('nombre'),
             TextField::new('descripcion'),
-            MoneyField::new('precio')->setCurrency('EUR'),
+            MoneyField::new('precio')
+            ->setCurrency('EUR')
+            ->setStoredAsCents(false),
             AssociationField::new('categoria'),
             CollectionField::new('fotos')
             ->setEntryType(FotoProductoType::class)
