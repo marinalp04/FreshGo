@@ -28,7 +28,7 @@ class CategoriaCrudController extends AbstractCrudController
             BooleanField::new('destacada', 'Destacada'),
             ImageField::new('foto', 'Foto')
                 ->setUploadDir('public/uploads/fotos_categorias/')
-                ->setBasePath('uploads/foto_categorias/')
+                ->setBasePath('uploads/fotos_categorias/')
                 ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]')
                 ->setRequired($pageName === 'new'),
         ];
