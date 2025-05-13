@@ -1,0 +1,17 @@
+
+{% block content %}
+    <h1>Confirmar eliminación</h1>
+    <div class="alert alert-warning">
+        <p>
+            Estás a punto de eliminar la categoría <strong>{{ categoria.nombre }}</strong>.
+            Esta acción también eliminará todos los productos asociados.
+        </p>
+        <p>¿Estás seguro de que deseas continuar?</p>
+    </div>
+
+    <form method="post" action="{{ path('admin_categoria_force_delete', { id: categoria.id }) }}">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ categoria.id) }}">
+        <button class="btn btn-danger">Eliminar definitivamente</button>
+        <a href="{{ ea_url().setController('App\\Controller\\Admin\\CategoriaCrudController').setAction('index') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+{% endblock %}
