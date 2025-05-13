@@ -16,6 +16,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\File;
 
 
 class CategoriaCrudController extends AbstractCrudController
@@ -68,6 +70,17 @@ class CategoriaCrudController extends AbstractCrudController
         if (!$categoria) {
             $this->addFlash('danger', 'Categoría no encontrada.');
         } else {
+            // Eliminar imagen asociada si existe
+            $foto = $categoria->getFoto();
+            if ($foto) {
+                $filesystem = new Filesystem();
+                $rutaFoto = $this->getParameter('kernel.project_dir') . '/public/uploads/fotos_categorias/' . $foto;
+
+                if ($filesystem->exists($rutaFoto)) {
+                    $filesystem->remove($rutaFoto);
+                }   
+            }
+
             foreach ($categoria->getProductos() as $producto) {
                 $entityManager->remove($producto);
             }
