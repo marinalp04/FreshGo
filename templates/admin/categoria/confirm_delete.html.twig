@@ -1,17 +1,26 @@
+{% extends 'admin/customizar.html.twig' %}
 
 {% block content %}
-    <h1>Confirmar eliminación</h1>
-    <div class="alert alert-warning">
-        <p>
-            Estás a punto de eliminar la categoría <strong>{{ categoria.nombre }}</strong>.
-            Esta acción también eliminará todos los productos asociados.
-        </p>
-        <p>¿Estás seguro de que deseas continuar?</p>
-    </div>
+    <div class="container mt-5">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h3 class="mb-0">Confirmar eliminación</h3>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <p>
+                        Estás a punto de eliminar la categoría <strong>{{ categoria.nombre }}</strong>.
+                        Esta acción también eliminará todos los productos asociados a ella.
+                    </p>
+                    <p>¿Estás seguro de que deseas continuar?</p>
+                </div>
 
-    <form method="post" action="{{ path('admin_categoria_force_delete', { id: categoria.id }) }}">
-        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ categoria.id) }}">
-        <button class="btn btn-danger">Eliminar definitivamente</button>
-        <a href="{{ ea_url().setController('App\\Controller\\Admin\\CategoriaCrudController').setAction('index') }}" class="btn btn-secondary">Cancelar</a>
-    </form>
+                <form method="post" action="{{ path('admin_categoria_force_delete', { id: categoria.id }) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ categoria.id) }}">
+                    <button class="btn btn-danger me-2">Eliminar definitivamente</button>
+                    <a href="{{ ea_url().setController('App\\Controller\\Admin\\CategoriaCrudController').setAction('index') }}" class="btn btn-secondary">↩️ Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}

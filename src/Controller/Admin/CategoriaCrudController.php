@@ -70,7 +70,7 @@ class CategoriaCrudController extends AbstractCrudController
         if (!$categoria) {
             $this->addFlash('danger', 'Categoría no encontrada.');
         } else {
-            // Eliminar imagen asociada si existe
+            // Eliminar imagen asociada
             $foto = $categoria->getFoto();
             if ($foto) {
                 $filesystem = new Filesystem();
