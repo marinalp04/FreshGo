@@ -38,6 +38,12 @@ class UsuarioController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $roles = $form->get('roles')->getData();
+            if (!in_array('ROLE_USER', $roles)) {
+                $roles[] = 'ROLE_USER';
+            }
+            $usuario->setRoles($roles);
+            
             $entityManager->flush();
 
             $this->addFlash('success', 'Usuario actualizado correctamente.');

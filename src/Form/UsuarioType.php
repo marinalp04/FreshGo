@@ -19,12 +19,11 @@ class UsuarioType extends AbstractType
             ->add('telefono')
             ->add('roles', ChoiceType::class, [
                 'choices'  => [
-                    'Usuario' => 'ROLE_USER',
                     'Administrador' => 'ROLE_ADMIN',
                 ],
                 'expanded' => true,
                 'multiple' => true,
-                'label' => 'Roles',
+                'label' => 'Permisos adicionales',
             ]);
     }
 
