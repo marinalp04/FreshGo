@@ -31,6 +31,26 @@ class UsuarioController extends AbstractController
         ]);
     }   
 
+    #[Route('/admin/usuarios/{id}/edit', name: 'usuario_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Usuario $usuario, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(UsuarioType::class, $usuario);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Usuario actualizado correctamente.');
+
+            return $this->redirectToRoute('usuarios_index');
+        }
+
+        return $this->render('admin/usuario/edit.html.twig', [
+            'usuario' => $usuario,
+            'form' => $form->createView(),
+        ]);
+    }   
+
    
 }
 
