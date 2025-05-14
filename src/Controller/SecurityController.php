@@ -42,8 +42,7 @@ final class SecurityController extends AbstractController
                 $usuario->getPassword()
             );
             $usuario->setPassword($hashedPassword);
-            // Para asignar rol por defecto
-            $usuario->setRol(0);
+            
 
             $entityManager->persist($usuario);
             $entityManager->flush();

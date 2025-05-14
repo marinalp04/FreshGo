@@ -1,0 +1,43 @@
+{% extends 'admin/base_admin.html.twig' %}
+
+{% block content %}
+    <h1>Listado de Usuarios</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.id }}</td>
+                    <td>{{ usuario.nombre }}</td>
+                    <td>{{ usuario.apellidos }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td>
+                        {% for rol in usuario.roles %}
+                            <span class="badge bg-secondary">{{ rol }}</span>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-sm btn-info disabled">Ver</a>
+                        <a href="#" class="btn btn-sm btn-warning disabled">Editar</a>
+                        <a href="#" class="btn btn-sm btn-danger disabled">Eliminar</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">No hay usuarios.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
