@@ -29,9 +29,9 @@
                         {% endfor %}
                     </td>
                     <td>
-                        <a href="#" class="btn btn-sm btn-info disabled">Ver</a>
-                        <a href="#" class="btn btn-sm btn-warning disabled">Editar</a>
-                        <a href="#" class="btn btn-sm btn-danger disabled">Eliminar</a>
+                        <a href="{{ path('usuario_show', { id: usuario.id }) }}" class="btn btn-sm btn-info">Ver</a>
+                        <a href="#" class="btn btn-sm btn-warning ">Editar</a>
+                        <a href="#" class="btn btn-sm btn-danger ">Eliminar</a>
                     </td>
                 </tr>
             {% else %}

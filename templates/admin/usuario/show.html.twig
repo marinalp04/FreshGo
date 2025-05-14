@@ -1,0 +1,22 @@
+{% extends 'admin/base_admin.html.twig' %}
+
+{% block title %}Detalles del Usuario{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h2>Detalles del Usuario</h2>
+        </div>
+        <div class="card-body">
+            <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
+            <p><strong>Apellidos:</strong> {{ usuario.apellidos }}</p>
+            <p><strong>Email:</strong> {{ usuario.email }}</p>
+            <p><strong>Dirección:</strong> {{ usuario.direccion }}</p>
+            <p><strong>Teléfono:</strong> {{ usuario.telefono }}</p>
+            <p><strong>Roles:</strong> {{ usuario.roles|join(', ') }}</p>
+        </div>
+        <div class="card-footer">
+            <a href="{{ path('usuarios_index') }}" class="btn btn-secondary">Volver al listado</a>
+        </div>
+    </div>
+{% endblock %}

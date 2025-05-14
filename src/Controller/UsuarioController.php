@@ -11,10 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/usuarios')]
 class UsuarioController extends AbstractController
 {
-    #[Route('/', name: 'admin_usuarios_index')]
+    #[Route('/admin/usuarios', name: 'usuarios_index')]
     public function index(EntityManagerInterface $em): Response
     {
         $usuarios = $em->getRepository(Usuario::class)->findAll();
@@ -23,6 +22,15 @@ class UsuarioController extends AbstractController
             'usuarios' => $usuarios,
         ]);
     }
+
+    #[Route('/admin/usuarios/{id}', name: 'usuario_show', methods: ['GET'])]
+    public function show(Usuario $usuario): Response
+    {
+        return $this->render('admin/usuario/show.html.twig', [
+            'usuario' => $usuario,
+        ]);
+    }   
+
    
 }
 

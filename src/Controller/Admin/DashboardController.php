@@ -35,6 +35,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToUrl('Volver a la web', 'fas fa-arrow-left', $this->generateUrl('app_home'));
         yield MenuItem::linkToCrud('Productos', 'fas fa-carrot', Producto::class);
         yield MenuItem::linkToCrud('Categorias', 'fas fa-tags', Categoria::class);
-        yield MenuItem::linkToUrl('Usuarios', 'fas fa-users', $this->generateUrl('admin_usuarios_index'));
+        yield MenuItem::linkToUrl('Usuarios', 'fas fa-users', $this->generateUrl('usuarios_index'));
     }
 }
