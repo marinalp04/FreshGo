@@ -4,6 +4,7 @@ namespace App\Form;
 use App\Entity\Usuario;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,7 +15,10 @@ class UsuarioType extends AbstractType
         $builder
             ->add('nombre')
             ->add('apellidos')
-            ->add('email')
+            ->add('email', EmailType::class, [
+                'disabled' => true,
+                'label' => 'Correo electrónico'
+            ])
             ->add('direccion')
             ->add('telefono')
             ->add('roles', ChoiceType::class, [
