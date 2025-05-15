@@ -13,7 +13,7 @@ final class ProductosController extends AbstractController{
     #[Route('/producto/{id}', name: 'producto_detalle')]
     public function detalle(Producto $producto): Response
     {
-        if (!$producto->isActivo()) {
+        if (!$producto->isActivo() || !$producto->getCategoria()->isActivo()) {
             throw $this->createNotFoundException('Producto no disponible o inactivo');
         }
 
