@@ -57,6 +57,9 @@ class Producto
     #[ORM\OneToMany(targetEntity: FotoProducto::class, mappedBy: 'producto')]
     private Collection $fotoProductos;
 
+    #[ORM\Column]
+    private ?bool $activo = null;
+
     public function __construct()
     {
         $this->detallePedidoClientes = new ArrayCollection();
@@ -270,6 +273,18 @@ class Producto
                 $foto->setProducto(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isActivo(): ?bool
+    {
+        return $this->activo;
+    }
+
+    public function setActivo(bool $activo): static
+    {
+        $this->activo = $activo;
 
         return $this;
     }

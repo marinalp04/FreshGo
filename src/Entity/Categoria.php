@@ -21,7 +21,7 @@ class Categoria
     /**
      * @var Collection<int, Producto>
      */
-    #[ORM\OneToMany(targetEntity: Producto::class, mappedBy: 'categoria', cascade: ['remove'], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Producto::class, mappedBy: 'categoria')]
     private Collection $productos;
 
     #[ORM\Column(length: 255)]
@@ -32,6 +32,9 @@ class Categoria
 
     #[ORM\Column]
     private ?bool $destacada = null;
+
+    #[ORM\Column]
+    private ?bool $activo = null;
 
     public function __construct()
     {
@@ -124,5 +127,17 @@ class Categoria
     public function __toString(): string
     {
         return $this->nombre;
+    }
+
+    public function isActivo(): ?bool
+    {
+        return $this->activo;
+    }
+
+    public function setActivo(bool $activo): static
+    {
+        $this->activo = $activo;
+
+        return $this;
     }
 }

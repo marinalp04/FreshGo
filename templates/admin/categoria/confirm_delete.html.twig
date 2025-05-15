@@ -1,26 +1,35 @@
 {% extends 'admin/customizar.html.twig' %}
 
 {% block content %}
-    <div class="container mt-5">
-        <div class="card border-danger">
-            <div class="card-header bg-danger text-white">
-                <h3 class="mb-0">Confirmar eliminación</h3>
-            </div>
-            <div class="card-body">
-                <div class="alert alert-warning">
+<div class="container mt-5">
+    <div class="card border-warning">
+        <div class="card-header bg-warning text-dark">
+            <h3 class="mb-0">Gestionar categoría</h3>
+        </div>
+        <div class="card-body">
+            {% if productos|length > 0 %}
+                <div class="alert alert-danger">
                     <p>
-                        Estás a punto de eliminar la categoría <strong>{{ categoria.nombre }}</strong>.
-                        Esta acción también eliminará todos los productos asociados a ella.
+                        La categoría <strong>{{ categoria.nombre }}</strong> tiene <strong>{{ productos|length }}</strong> producto{{ productos|length > 1 ? 's' : '' }} asociado{{ productos|length > 1 ? 's' : '' }}.
                     </p>
-                    <p>¿Estás seguro de que deseas continuar?</p>
+                    <p>No se puede eliminar una categoría con productos asociados.</p>
+                    <p>Puede desactivarla junto a sus productos en la pantalla anterior</p>
                 </div>
 
-                <form method="post" action="{{ path('admin_categoria_force_delete', { id: categoria.id }) }}">
+                <a href="{{ ea_url().setController('App\\Controller\\Admin\\CategoriaCrudController').setAction('index') }}" class="btn btn-secondary">Volver</a>
+            {% else %}
+                <div class="alert alert-warning">
+                    <p>¿Estás seguro de que deseas eliminar la categoría <strong>{{ categoria.nombre }}</strong>? No tiene productos asociados y se eliminará permanentemente.</p>
+                </div>
+
+                <form method="post" action="{{ path('admin_categoria_delete', { id: categoria.id }) }}">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ categoria.id) }}">
                     <button class="btn btn-danger me-2">Eliminar definitivamente</button>
-                    <a href="{{ ea_url().setController('App\\Controller\\Admin\\CategoriaCrudController').setAction('index') }}" class="btn btn-secondary">↩️ Cancelar</a>
+                    <a href="{{ ea_url().setController('App\\Controller\\Admin\\CategoriaCrudController').setAction('index') }}" class="btn btn-secondary">Cancelar</a>
                 </form>
-            </div>
+            {% endif %}
         </div>
     </div>
+</div>
 {% endblock %}
+

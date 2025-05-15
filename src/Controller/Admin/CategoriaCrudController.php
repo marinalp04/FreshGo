@@ -34,6 +34,7 @@ class CategoriaCrudController extends AbstractCrudController
             TextField::new('nombre', 'Nombre'),
             TextareaField::new('descripcion', 'Descripción'),
             BooleanField::new('destacada', 'Destacada'),
+            BooleanField::new('activo', 'Activa'),
             ImageField::new('foto', 'Foto')
                 ->setUploadDir('public/uploads/fotos_categorias/')
                 ->setBasePath('uploads/fotos_categorias/')
@@ -44,7 +45,7 @@ class CategoriaCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        $confirmDelete = Action::new('confirmDelete', 'Eliminar (con productos)')
+        $confirmDelete = Action::new('confirmDelete', 'Eliminar')
             ->linkToCrudAction('confirmDelete')
             ->addCssClass('btn btn-danger');
 
@@ -56,42 +57,39 @@ class CategoriaCrudController extends AbstractCrudController
     public function confirmDelete(AdminContext $context): Response
     {
         $categoria = $context->getEntity()->getInstance();
+        $productos = $categoria->getProductos();
 
         return $this->render('admin/categoria/confirm_delete.html.twig', [
             'categoria' => $categoria,
+            'productos' => $productos,
         ]);
     }
 
-    #[Route('/admin/categoria/{id}/force-delete', name: 'admin_categoria_force_delete')]
-    public function forceDelete(int $id, EntityManagerInterface $entityManager, AdminUrlGenerator $adminUrlGenerator): Response
+    #[Route('/admin/categoria/{id}/delete', name: 'admin_categoria_delete')]
+    public function deleteIfNoProductos(int $id, EntityManagerInterface $em, AdminUrlGenerator $adminUrlGenerator): Response
     {
-        $categoria = $entityManager->getRepository(Categoria::class)->find($id);
+        $categoria = $em->getRepository(Categoria::class)->find($id);
 
         if (!$categoria) {
-            $this->addFlash('danger', 'Categoría no encontrada.');
+            
+        } elseif (count($categoria->getProductos()) > 0) {
+            $this->addFlash('warning', 'No se puede eliminar una categoría con productos asociados.');
         } else {
-            // Eliminar imagen asociada
             $foto = $categoria->getFoto();
             if ($foto) {
-                $filesystem = new Filesystem();
-                $rutaFoto = $this->getParameter('kernel.project_dir') . '/public/uploads/fotos_categorias/' . $foto;
-
-                if ($filesystem->exists($rutaFoto)) {
-                    $filesystem->remove($rutaFoto);
-                }   
+                $ruta = $this->getParameter('kernel.project_dir') . '/public/uploads/fotos_categorias/' . $foto;
+                $fs = new Filesystem();
+                if ($fs->exists($ruta)) {
+                    $fs->remove($ruta);
+                }
             }
 
-            foreach ($categoria->getProductos() as $producto) {
-                $entityManager->remove($producto);
-            }
+            $em->remove($categoria);
+            $em->flush();
 
-            $entityManager->remove($categoria);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Categoría y productos eliminados correctamente.');
+            $this->addFlash('success', 'Categoría eliminada correctamente.');
         }
 
-        //Redirigir al listado de categorías
         $url = $adminUrlGenerator
             ->setController(CategoriaCrudController::class)
             ->setAction('index')
@@ -100,5 +98,23 @@ class CategoriaCrudController extends AbstractCrudController
         return $this->redirect($url);
     }
 
+
+
+   
+
+    #[Route('/categoria/{id}/desactivar', name: 'categoria_desactivar')]
+    public function desactivar(Categoria $categoria, EntityManagerInterface $em): Response
+    {
+        $categoria->setActivo(false);
+
+        foreach ($categoria->getProductos() as $producto) {
+            $producto->setActivo(false);
+        }
+
+        $em->flush();
+
+        $this->addFlash('success', 'Categoría y productos desactivados correctamente.');
+        return $this->redirectToRoute('categoria_index');
+    }
 
 }
