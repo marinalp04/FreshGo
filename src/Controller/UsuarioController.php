@@ -41,7 +41,6 @@ class UsuarioController extends AbstractController
 
             $usuarioManager->crearUsuario($usuario, $plainPassword);
 
-            $this->addFlash('success', 'Usuario creado correctamente.');
             return $this->redirectToRoute('usuarios_index');
         }
 
@@ -88,7 +87,6 @@ class UsuarioController extends AbstractController
 
             $entityManager->flush();
 
-            $this->addFlash('success', 'Usuario actualizado correctamente.');
             return $this->redirectToRoute('usuarios_index');
         }
 
@@ -107,8 +105,6 @@ class UsuarioController extends AbstractController
         if ($this->isCsrfTokenValid('delete_usuario_' . $usuario->getId(), $request->request->get('_token'))) {
             $entityManager->remove($usuario);
             $entityManager->flush();
-
-            $this->addFlash('success', 'Usuario eliminado correctamente.');
         }
 
         return $this->redirectToRoute('usuarios_index');
