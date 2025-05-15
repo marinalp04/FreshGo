@@ -30,8 +30,8 @@ final class CategoriasController extends AbstractController
        if (!$categoria || !$categoria->isActivo()) {
             throw $this->createNotFoundException('Categoría no encontrada o inactiva');
         }
-        
-        $productos = $categoria->getProductos();
+
+        $productos = $categoria->getProductos()->filter(fn($p) => $p->isActivo());
         $fotosPorProducto = [];
 
         foreach ($productos as $producto) {

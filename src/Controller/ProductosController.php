@@ -13,6 +13,10 @@ final class ProductosController extends AbstractController{
     #[Route('/producto/{id}', name: 'producto_detalle')]
     public function detalle(Producto $producto): Response
     {
+        if (!$producto->isActivo()) {
+            throw $this->createNotFoundException('Producto no disponible o inactivo');
+        }
+
         return $this->render('producto/index.html.twig', [
             'producto' => $producto,
             'fotos' => $producto->getFotoProductos(),

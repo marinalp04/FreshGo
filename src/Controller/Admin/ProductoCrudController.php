@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use Symfony\Component\Form\FormBuilderInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Form\Type\FileUploadType;
@@ -30,6 +31,7 @@ class ProductoCrudController extends AbstractCrudController
             ->setCurrency('EUR')
             ->setStoredAsCents(false),
             AssociationField::new('categoria'),
+            BooleanField::new('activo', 'Activo'),
             CollectionField::new('fotos')
             ->setEntryType(FotoProductoType::class)
             ->onlyOnForms()
