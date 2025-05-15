@@ -15,7 +15,7 @@ final class CategoriasController extends AbstractController
     #[Route('/categorias', name: 'app_categorias')]
     public function index(EntityManagerInterface $entityManager): Response
     {
-        $categorias = $entityManager->getRepository(Categoria::class)->findAll();
+       $categorias = $entityManager->getRepository(Categoria::class)->findBy(['activo' => true]);
 
         return $this->render('categorias/index.html.twig', [
             'categorias' => $categorias,
@@ -27,10 +27,10 @@ final class CategoriasController extends AbstractController
     {
         $categoria = $categoriaRepo->find($id);
 
-        if (!$categoria) {
-            throw $this->createNotFoundException('Categoría no encontrada');
+       if (!$categoria || !$categoria->isActivo()) {
+            throw $this->createNotFoundException('Categoría no encontrada o inactiva');
         }
-
+        
         $productos = $categoria->getProductos();
         $fotosPorProducto = [];
 
