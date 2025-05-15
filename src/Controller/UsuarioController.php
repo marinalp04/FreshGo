@@ -98,9 +98,21 @@ class UsuarioController extends AbstractController
         ]);
     }
 
-   
+   #[Route('/admin/usuarios/{id}/delete', name: 'usuario_delete', methods: ['POST'])]
+    public function delete(
+        Request $request,
+        Usuario $usuario,
+        EntityManagerInterface $entityManager
+    ): Response {
+        if ($this->isCsrfTokenValid('delete_usuario_' . $usuario->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($usuario);
+            $entityManager->flush();
 
+            $this->addFlash('success', 'Usuario eliminado correctamente.');
+        }
 
+        return $this->redirectToRoute('usuarios_index');
+    }
    
 }
 

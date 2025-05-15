@@ -31,9 +31,14 @@
                         {% endfor %}
                     </td>
                     <td>
-                        <a href="{{ path('usuario_show', { id: usuario.id }) }}" class="btn btn-sm btn-info">Ver</a>
-                        <a href="{{ path('usuario_edit', { id: usuario.id }) }}" class="btn btn-sm btn-warning ">Editar</a>
-                        <a href="#" class="btn btn-sm btn-danger ">Eliminar</a>
+                        <div class="d-flex gap-2">
+                            <a href="{{ path('usuario_show', { id: usuario.id }) }}" class="btn btn-sm btn-info">Ver</a>
+                            <a href="{{ path('usuario_edit', { id: usuario.id }) }}" class="btn btn-sm btn-warning ">Editar</a>
+                            <form method="post" action="{{ path('usuario_delete', {'id': usuario.id}) }}" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este usuario?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete_usuario_' ~ usuario.id) }}">
+                                <button class="btn btn-danger btn-sm">Eliminar</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             {% else %}
