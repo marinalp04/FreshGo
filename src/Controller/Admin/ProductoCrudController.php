@@ -25,6 +25,7 @@ class ProductoCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            IdField ::new('id')->onlyOnIndex(),
             TextField::new('nombre'),
             TextField::new('descripcion'),
             MoneyField::new('precio')
