@@ -13,6 +13,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Form\RegistrationType;
+use App\Service\UsuarioManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class SecurityController extends AbstractController
@@ -27,39 +28,28 @@ final class SecurityController extends AbstractController
         EntityManagerInterface $entityManager,
         UserAuthenticatorInterface $userAuthenticator,
         UsuarioAuthenticator $authenticator,
-        UserPasswordHasherInterface $passwordHasher
+        UsuarioManager $usuarioManager
     ): Response {
         $usuario = new Usuario();
 
         $form = $this->createForm(RegistrationType::class, $usuario);
         $form->handleRequest($request);
-    
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            // Para encriptar la contraseña
-            $hashedPassword = $passwordHasher->hashPassword(
-                $usuario,
-                $usuario->getPassword()
-            );
-            $usuario->setPassword($hashedPassword);
-            
 
-            $entityManager->persist($usuario);
-            $entityManager->flush();
-            
-            //Autenticar al usuario automaticamente después de registrarse
+        if ($form->isSubmitted() && $form->isValid()) {
+            $usuarioManager->crearUsuario($usuario);
+
             return $userAuthenticator->authenticateUser(
                 $usuario,
                 $authenticator,
                 $request
             );
-          
         }
-    
+
         return $this->render('security/registro.html.twig', [
-            'form' => $form->createView(), 
+            'form' => $form->createView(),
         ]);
     }
+
 
     #[Route(path: '/login', name: 'app_login')]
     public function login(Request $request, AuthenticationUtils $authenticationUtils): Response
