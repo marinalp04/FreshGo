@@ -49,6 +49,9 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
+    #[ORM\Column]
+    private ?bool $activo = null;
+
     public function __construct()
     {
         $this->pedidoClientes = new ArrayCollection();
@@ -201,5 +204,17 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->email;
     }
+
+      public function isActivo(): ?bool
+      {
+          return $this->activo;
+      }
+
+      public function setActivo(bool $activo): static
+      {
+          $this->activo = $activo;
+
+          return $this;
+      }
     
 }

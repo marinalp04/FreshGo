@@ -103,12 +103,30 @@ class UsuarioController extends AbstractController
         EntityManagerInterface $entityManager
     ): Response {
         if ($this->isCsrfTokenValid('delete_usuario_' . $usuario->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($usuario);
-            $entityManager->flush();
+            if (count($usuario->getPedidoClientes()) > 0) {
+                $this->addFlash('warning', 'Este usuario tiene pedidos asociados y no puede eliminarse. Puedes desactivarlo desde la edición.');
+            } else {
+                $entityManager->remove($usuario);
+                $entityManager->flush();
+                $this->addFlash('success', 'Usuario eliminado correctamente.');
+            }
         }
 
         return $this->redirectToRoute('usuarios_index');
     }
+
+    #[Route('/admin/usuarios/{id}/confirm-delete', name: 'usuario_confirm_delete', methods: ['GET'])]
+    public function confirmDelete(Usuario $usuario, EntityManagerInterface $em): Response
+    {
+        $pedidos = $usuario->getPedidoClientes(); 
+
+        return $this->render('admin/usuario/confirm_delete.html.twig', [
+            'usuario' => $usuario,
+            'pedidos' => $pedidos,
+        ]);
+    }
+
+
    
 }
 

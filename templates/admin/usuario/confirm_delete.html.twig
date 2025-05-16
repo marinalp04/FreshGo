@@ -1,0 +1,29 @@
+{% extends 'admin/base_admin.html.twig' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card border-warning">
+        <div class="card-header bg-warning text-dark">
+            <h3 class="mb-0">Gestionar usuario</h3>
+        </div>
+        <div class="card-body">
+            {% if pedidos|length > 0 %}
+                <div class="alert alert-danger">
+                    <p>El usuario <strong>{{ usuario.email }}</strong> tiene <strong>{{ pedidos|length }}</strong> pedido{{ pedidos|length > 1 ? 's' : '' }} asociado{{ pedidos|length > 1 ? 's' : '' }}.</p>
+                    <p>No se puede eliminar. Puedes desactivarlo desde la edición del usuario.</p>
+                </div>
+                <a href="{{ path('usuarios_index') }}" class="btn btn-secondary">Volver</a>
+            {% else %}
+                <div class="alert alert-warning">
+                    <p>¿Estás seguro de que deseas eliminar al usuario <strong>{{ usuario.nombre }} {{ usuario.apellidos }}</strong>? No tiene pedidos asociados.</p>
+                </div>
+                <form method="post" action="{{ path('usuario_delete', { id: usuario.id }) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete_usuario_' ~ usuario.id) }}">
+                    <button class="btn btn-danger me-2">Eliminar definitivamente</button>
+                    <a href="{{ path('usuarios_index') }}" class="btn btn-secondary">Cancelar</a>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

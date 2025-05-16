@@ -3,6 +3,7 @@ namespace App\Form;
 
 use App\Entity\Usuario;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -31,6 +32,10 @@ class UsuarioType extends AbstractType
                     'placeholder' => $isEdit ? 'Nueva contraseña (opcional)' : '',
                     'autocomplete' => 'new-password',
                 ],
+            ])
+             ->add('activo', CheckboxType::class, [
+                'label' => 'Usuario activo',
+                'required' => false,
             ])
             ->add('roles', ChoiceType::class, [
                 'choices'  => [

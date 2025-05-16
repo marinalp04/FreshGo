@@ -15,6 +15,7 @@
                 <th>Nombre</th>
                 <th>Apellidos</th>
                 <th>Email</th>
+                <th>Activo</th>
                 <th>Roles</th>
                 <th>Acciones</th>
             </tr>
@@ -27,6 +28,13 @@
                     <td>{{ usuario.apellidos }}</td>
                     <td>{{ usuario.email }}</td>
                     <td>
+                        {% if usuario.activo %}
+                            <span class="badge bg-success">Activo</span>
+                        {% else %}
+                            <span class="badge bg-danger">Inactivo</span>
+                        {% endif %}
+                    </td>
+                    <td>
                         {% for rol in usuario.roles %}
                             <span class="badge bg-secondary">{{ rol }}</span>
                         {% endfor %}
@@ -35,10 +43,9 @@
                         <div class="d-flex gap-2">
                             <a href="{{ path('usuario_show', { id: usuario.id }) }}" class="btn btn-sm btn-info">Ver</a>
                             <a href="{{ path('usuario_edit', { id: usuario.id }) }}" class="btn btn-sm btn-warning ">Editar</a>
-                            <form method="post" action="{{ path('usuario_delete', {'id': usuario.id}) }}" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este usuario?');">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete_usuario_' ~ usuario.id) }}">
-                                <button class="btn btn-danger btn-sm">Eliminar</button>
-                            </form>
+                            <a href="{{ path('usuario_confirm_delete', { id: usuario.id }) }}" class="btn btn-danger btn-sm">
+                                Eliminar
+                            </a>
                         </div>
                     </td>
                 </tr>
