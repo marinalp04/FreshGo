@@ -1,0 +1,51 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content %}
+<div class="container my-4">
+    <h1 class="mb-4">Pedido #{{ entity.instance.id }}</h1>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <p><strong>Cliente:</strong> {{ entity.instance.usuario }}</p>
+            <p><strong>Fecha de creación:</strong> {{ entity.instance.fechaCreacion|date('d/m/Y H:i') }}</p>
+            <p><strong>Fecha de confirmación:</strong> {{ entity.instance.fechaConfirmacion ? entity.instance.fechaConfirmacion|date('d/m/Y H:i') : 'No confirmada' }}</p>
+            <p><strong>Estado:</strong> {{ entity.instance.estado }}</p>
+            <p><strong>Total:</strong> {{ entity.instance.total }} €</p>
+        </div>
+    </div>
+
+    <h2 class="mb-3">Detalles del pedido</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-light">
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio unitario</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detalle in entity.instance.detallePedidoClientes %}
+                    <tr>
+                        <td>{{ detalle.producto.nombre }}</td>
+                        <td>{{ detalle.cantidad }}</td>
+                        <td>{{ detalle.precioUnitario }} €</td>
+                        <td>{{ (detalle.cantidad * detalle.precioUnitario)|number_format(2) }} €</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">Este pedido no tiene detalles.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- Botones de acción -->
+    <div class="mt-4">
+
+        <a href="/admin?crudControllerFqcn=App\Controller\Admin\PedidoClienteCrudController&crudAction=index" class="btn btn-secondary">Volver</a>
+
+    </div>
+</div>
+{% endblock %}
