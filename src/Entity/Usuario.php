@@ -50,7 +50,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     #[ORM\Column]
-    private ?bool $activo = null;
+    private ?bool $activo = true;
 
     public function __construct()
     {

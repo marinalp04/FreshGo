@@ -36,7 +36,8 @@ final class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $usuarioManager->crearUsuario($usuario);
+            $plainPassword = $form->get('password')->getData();
+            $usuarioManager->crearUsuario($usuario, $plainPassword);
 
             return $userAuthenticator->authenticateUser(
                 $usuario,
