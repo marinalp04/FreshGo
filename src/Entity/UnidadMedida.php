@@ -90,4 +90,9 @@ class UnidadMedida
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->unidad_abreviada;
+    }
 }

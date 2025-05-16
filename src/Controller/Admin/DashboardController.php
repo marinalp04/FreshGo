@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Categoria;
+use App\Entity\Ingrediente;
 use App\Entity\PedidoCliente;
 use App\Entity\Producto;
 use App\Entity\UnidadMedida;
@@ -36,10 +37,12 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToUrl('Volver a la web', 'fas fa-arrow-left', $this->generateUrl('app_home'));
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home'); 
         yield MenuItem::linkToCrud('Categorias', 'fas fa-tags', Categoria::class);
-        yield MenuItem::linkToCrud('Productos', 'fas fa-carrot', Producto::class);
+        yield MenuItem::linkToCrud('Productos', 'fas fa-utensils', Producto::class);
         yield MenuItem::linkToUrl('Usuarios', 'fas fa-users', $this->generateUrl('usuarios_index'));
         yield MenuItem::linkToCrud('Pedidos', 'fas fa-shopping-cart', PedidoCliente::class);
         yield MenuItem::linkToCrud('Unidades de Medida', 'fas fa-balance-scale', UnidadMedida::class);
+        yield MenuItem::linkToCrud('Ingredientes', 'fas fa-carrot', Ingrediente::class);
+
 
 
     }
