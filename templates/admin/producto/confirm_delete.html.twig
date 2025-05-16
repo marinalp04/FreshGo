@@ -1,0 +1,33 @@
+
+{% extends 'admin/customizar.html.twig' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card border-warning">
+        <div class="card-header bg-warning text-dark">
+            <h3 class="mb-0">Gestionar producto</h3>
+        </div>
+        <div class="card-body">
+            {% if pedidos|length > 0 %}
+                <div class="alert alert-danger">
+                    <p>
+                        El producto <strong>{{ producto.nombre }}</strong> está incluido en <strong>{{ pedidos|length }}</strong> pedido{{ pedidos|length > 1 ? 's' : '' }}.
+                    </p>
+                    <p>No se puede eliminar un producto que esté en pedidos.</p>
+                    <p>Puedes ocultarlo desde la pantalla anterior.</p>
+                </div>
+                <a href="{{ ea_url().setController('App\\Controller\\Admin\\ProductoCrudController').setAction('index') }}" class="btn btn-secondary">Volver</a>
+            {% else %}
+                <div class="alert alert-warning">
+                    <p>¿Estás seguro de que deseas eliminar el producto <strong>{{ producto.nombre }}</strong>? No está en pedidos y se eliminará permanentemente.</p>
+                </div>
+                <form method="post" action="{{ path('admin_producto_delete', { id: producto.id }) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ producto.id) }}">
+                    <button class="btn btn-danger me-2">Eliminar definitivamente</button>
+                    <a href="{{ ea_url().setController('App\\Controller\\Admin\\ProductoCrudController').setAction('index') }}" class="btn btn-secondary">Cancelar</a>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
