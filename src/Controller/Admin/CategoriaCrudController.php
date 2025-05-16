@@ -47,13 +47,13 @@ class CategoriaCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        $confirmDelete = Action::new('confirmDelete', 'Eliminar')
+        $customDelete = Action::new('confirmDelete', 'Eliminar')
             ->linkToCrudAction('confirmDelete')
-            ->addCssClass('btn btn-danger');
+            ->setCssClass('btn btn-danger');
 
         return $actions
-            ->add(Crud::PAGE_INDEX, $confirmDelete)
-            ->disable(Action::DELETE);
+            ->add(Crud::PAGE_INDEX, $customDelete)
+            ->remove(Crud::PAGE_INDEX, Action::DELETE);
     }
 
     public function confirmDelete(AdminContext $context): Response

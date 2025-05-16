@@ -1,0 +1,31 @@
+{% extends 'admin/customizar.html.twig' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card border-warning">
+        <div class="card-header bg-warning text-dark">
+            <h3 class="mb-0">Gestionar unidad de medida</h3>
+        </div>
+        <div class="card-body">
+            {% if ingredientes|length > 0 %}
+                <div class="alert alert-danger">
+                    <p>La unidad de medida <strong>{{ unidad.nombre }}</strong> tiene <strong>{{ ingredientes|length }}</strong> ingrediente{{ ingredientes|length > 1 ? 's' : '' }} asociado{{ ingredientes|length > 1 ? 's' : '' }}.</p>
+                    <p>No se puede eliminar una unidad de medida con ingredientes asociados.</p>
+                </div>
+
+                <a href="{{ ea_url().setController('App\\Controller\\Admin\\UnidadMedidaCrudController').setAction('index') }}" class="btn btn-secondary">Volver</a>
+            {% else %}
+                <div class="alert alert-warning">
+                    <p>¿Está seguro de que desea eliminar la unidad de medida <strong>{{ unidad.nombre }}</strong>? Esta acción no se puede deshacer.</p>
+                </div>
+
+                <form method="post" action="{{ path('admin_unidad_medida_delete', { id: unidad.id }) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ unidad.id) }}">
+                    <button class="btn btn-danger me-2">Eliminar definitivamente</button>
+                    <a href="{{ ea_url().setController('App\\Controller\\Admin\\UnidadMedidaCrudController').setAction('index') }}" class="btn btn-secondary">Cancelar</a>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

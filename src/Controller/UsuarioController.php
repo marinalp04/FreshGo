@@ -108,7 +108,6 @@ class UsuarioController extends AbstractController
             } else {
                 $entityManager->remove($usuario);
                 $entityManager->flush();
-                $this->addFlash('success', 'Usuario eliminado correctamente.');
             }
         }
 
