@@ -48,7 +48,7 @@ class Producto
     /**
      * @var Collection<int, ComposicionProducto>
      */
-    #[ORM\OneToMany(targetEntity: ComposicionProducto::class, mappedBy: 'producto')]
+    #[ORM\OneToMany(targetEntity: ComposicionProducto::class, mappedBy: 'producto', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $composicionProductos;
 
     /**

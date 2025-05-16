@@ -64,4 +64,15 @@ class ComposicionProducto
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+         return $this->getIngrediente()->getNombre() 
+            . ': ' 
+            . $this->getCantidadNecesaria() 
+            . ' ' 
+            . $this->getIngrediente()->getUnidadMedida()->getUnidadAbreviada();
+    }
+
 }
+

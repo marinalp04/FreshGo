@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Producto;
+use App\Form\ComposicionProductoType;
 use App\Form\FotoProductoType;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -33,12 +34,22 @@ class ProductoCrudController extends AbstractCrudController
             ->setStoredAsCents(false),
             AssociationField::new('categoria'),
             BooleanField::new('activo', 'Activo'),
+
+            // Para insertar las imagenes en fotoProducto
             CollectionField::new('fotos')
             ->setEntryType(FotoProductoType::class)
             ->onlyOnForms()
             ->allowAdd()
             ->allowDelete()
             ->setFormTypeOptions(['by_reference' => false]),
+            
+            //Para insertar los ingredientes en su composicion
+            CollectionField::new('composicionProductos', 'Ingredientes del producto')
+            ->setEntryType(ComposicionProductoType::class)
+            ->allowAdd()
+            ->allowDelete()
+            ->setFormTypeOptions(['by_reference' => false])
+            ->onlyOnForms(),
         ];
     }
     
