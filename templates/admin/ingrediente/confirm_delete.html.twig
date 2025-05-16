@@ -1,0 +1,31 @@
+{% extends 'admin/customizar.html.twig' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card border-warning">
+        <div class="card-header bg-warning text-dark">
+            <h3 class="mb-0">Gestionar ingrediente</h3>
+        </div>
+        <div class="card-body">
+            {% if composiciones|length > 0 %}
+                <div class="alert alert-danger">
+                    <p>El ingrediente <strong>{{ ingrediente.nombre }}</strong> está siendo utilizado en <strong>{{ composiciones|length }}</strong> producto{{ composiciones|length > 1 ? 's' : '' }}.</p>
+                    <p>No se puede eliminar un ingrediente que esté en uso.</p>
+                </div>
+
+                <a href="{{ ea_url().setController('App\\Controller\\Admin\\IngredienteCrudController').setAction('index') }}" class="btn btn-secondary">Volver</a>
+            {% else %}
+                <div class="alert alert-warning">
+                    <p>¿Está seguro de que desea eliminar el ingrediente <strong>{{ ingrediente.nombre }}</strong>? Esta acción no se puede deshacer.</p>
+                </div>
+
+                <form method="post" action="{{ path('admin_ingrediente_delete', { id: ingrediente.id }) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ingrediente.id) }}">
+                    <button class="btn btn-danger me-2">Eliminar definitivamente</button>
+                    <a href="{{ ea_url().setController('App\\Controller\\Admin\\IngredienteCrudController').setAction('index') }}" class="btn btn-secondary">Cancelar</a>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
