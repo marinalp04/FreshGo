@@ -24,12 +24,17 @@ use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class ProductoCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
         return Producto::class;
+    }
+
+    public function __construct(private Security $security) {
+        
     }
 
     public function configureFields(string $pageName): iterable
@@ -64,6 +69,13 @@ class ProductoCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+        if ($this->security->isGranted('ROLE_ADMIN_READONLY') && 
+            !$this->security->isGranted('ROLE_ADMIN')) {
+            
+            return $actions
+                ->disable(Action::NEW, Action::EDIT, Action::DELETE);
+        }
+
         $customDelete = Action::new('confirmDelete', 'Eliminar')
             ->linkToCrudAction('confirmDelete')
             ->setCssClass('btn btn-danger');

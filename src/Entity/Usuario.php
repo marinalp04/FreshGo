@@ -49,12 +49,13 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-    #[ORM\Column]
+    #[ORM\Column ]
     private ?bool $activo = true;
 
     public function __construct()
     {
         $this->pedidoClientes = new ArrayCollection();
+        $this->activo = true;
     }
 
     

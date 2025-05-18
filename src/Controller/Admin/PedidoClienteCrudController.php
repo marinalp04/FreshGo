@@ -16,6 +16,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -24,6 +25,10 @@ class PedidoClienteCrudController extends AbstractCrudController
     public static function getEntityFqcn(): string
     {
         return PedidoCliente::class;
+    }
+
+    public function __construct(private Security $security) {
+        
     }
 
     public function configureFields(string $pageName): iterable
@@ -91,6 +96,13 @@ class PedidoClienteCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+        if ($this->security->isGranted('ROLE_ADMIN_READONLY') && 
+            !$this->security->isGranted('ROLE_ADMIN')) {
+            
+            return $actions
+                ->disable(Action::NEW, Action::EDIT, Action::DELETE);
+        }
+
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
             ->disable(Action::NEW, Action::DELETE);

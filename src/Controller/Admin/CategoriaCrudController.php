@@ -16,6 +16,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
@@ -28,6 +29,9 @@ class CategoriaCrudController extends AbstractCrudController
         return Categoria::class;
     }
 
+    public function __construct(private Security $security) {
+        
+    }
     
     public function configureFields(string $pageName): iterable
     {
@@ -47,6 +51,13 @@ class CategoriaCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+        if ($this->security->isGranted('ROLE_ADMIN_READONLY') && 
+            !$this->security->isGranted('ROLE_ADMIN')) {
+            
+            return $actions
+                ->disable(Action::NEW, Action::EDIT, Action::DELETE);
+        }
+
         $customDelete = Action::new('confirmDelete', 'Eliminar')
             ->linkToCrudAction('confirmDelete')
             ->setCssClass('btn btn-danger');

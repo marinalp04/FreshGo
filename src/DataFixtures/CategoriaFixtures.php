@@ -16,6 +16,7 @@ class CategoriaFixtures extends Fixture
         $categoria1->setDescripcion('Platos a base de ingredientes vegetales, ideales para vegetarianos y veganos.');
         $categoria1->setFoto('vegetarianos.jpg');
         $categoria1->setDestacada(false);
+        $categoria1->setActivo(true);
         $manager->persist($categoria1);
 
         $categoria2 = new Categoria();
@@ -23,6 +24,7 @@ class CategoriaFixtures extends Fixture
         $categoria2->setDescripcion('Platos ricos en proteínas, ideales para quienes buscan aumentar su masa muscular.');
         $categoria2->setFoto('proteicos.jpg');
         $categoria2->setDestacada(true);
+        $categoria2->setActivo(true);
         $manager->persist($categoria2);
 
         

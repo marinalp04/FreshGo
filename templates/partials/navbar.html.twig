@@ -38,7 +38,7 @@
 						<span class="text-success fw-semibold me-2">Hola,
 							{{ app.user.email }}</span>
 					</li>
-					{% if is_granted('ROLE_ADMIN') %}
+					{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ADMIN_READONLY') or is_granted('ROLE_SUPER_ADMIN') %}
 						<li class="nav-item">
 							<a class="btn btn-warning text-dark me-2" href="{{ path('admin') }}">Panel Admin</a>
 						</li>

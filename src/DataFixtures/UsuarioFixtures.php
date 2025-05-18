@@ -23,7 +23,8 @@ class UsuarioFixtures extends Fixture
         );
         $usuario1->setDireccion('Calle de la Paz, 123');
         $usuario1->setTelefono('123456789');
-        $usuario1->setRoles(['ROLE_ADMIN']);
+        $usuario1->setRoles(['ROLE_SUPER_ADMIN']);
+        $usuario1->setActivo(true);
         $manager->persist($usuario1);
 
         $usuario2 = new Usuario();
@@ -35,7 +36,8 @@ class UsuarioFixtures extends Fixture
         );
         $usuario2->setDireccion('Calle de la Paz, 223');
         $usuario2->setTelefono('223456789');
-        $usuario2->setRoles(['ROLE_USER']);
+        $usuario2->setRoles(['ROLE_ADMIN']);
+        $usuario2->setActivo(true);
         $manager->persist($usuario2);
 
         
@@ -43,6 +45,7 @@ class UsuarioFixtures extends Fixture
         $manager->flush();
 
         $this->addReference('usuario1', $usuario1);
+        $this->addReference('usuario2', $usuario2);
        
     }
 
