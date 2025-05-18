@@ -7,10 +7,17 @@ use App\Entity\Ingrediente;
 use App\Entity\PedidoCliente;
 use App\Entity\Producto;
 use App\Entity\UnidadMedida;
+use App\Entity\Usuario;
+use App\Repository\CategoriaRepository;
+use App\Repository\PedidoClienteRepository;
+use App\Repository\ProductoRepository;
+use App\Repository\UsuarioRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Http\Attribute\IsGranted as AttributeIsGranted;
@@ -21,10 +28,54 @@ use Symfony\Component\Routing\Annotation\Route;
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
+    private UsuarioRepository $usuarioRepo;
+    private ProductoRepository $productoRepo;
+    private PedidoClienteRepository $pedidoRepo;
+    private CategoriaRepository $categoriaRepo;
+    private AdminUrlGenerator $adminUrlGenerator;
+
+    public function __construct(
+        UsuarioRepository $usuarioRepo,
+        ProductoRepository $productoRepo,
+        PedidoClienteRepository $pedidoRepo,
+        CategoriaRepository $categoriaRepo,
+        AdminUrlGenerator $adminUrlGenerator
+    ) {
+        $this->usuarioRepo = $usuarioRepo;
+        $this->productoRepo = $productoRepo;
+        $this->pedidoRepo = $pedidoRepo;
+        $this->categoriaRepo = $categoriaRepo;
+        $this->adminUrlGenerator = $adminUrlGenerator;
+    }
+
+
     #[Route('/admin', name: 'admin')]
     public function index(): Response
-    { 
-        return $this->render('admin/dashboard.html.twig');
+    {
+        $totalUsuarios = $this->usuarioRepo->count([]);
+        $totalProductosActivos = $this->productoRepo->count(['activo' => true]);
+        $totalPedidos = $this->pedidoRepo->count([]);
+        $totalCategoriasActivas = $this->categoriaRepo->count(['activo' => true]);
+
+        $crearProductoUrl = $this->adminUrlGenerator
+            ->setController(\App\Controller\Admin\ProductoCrudController::class)
+            ->setAction('new')
+            ->generateUrl();
+
+        $crearCategoriaUrl = $this->adminUrlGenerator
+            ->setController(\App\Controller\Admin\CategoriaCrudController::class)
+            ->setAction('new')
+            ->generateUrl();
+
+
+        return $this->render('admin/dashboard.html.twig', [
+            'totalUsuarios' => $totalUsuarios,
+            'totalProductosActivos' => $totalProductosActivos,
+            'totalPedidos' => $totalPedidos,
+            'totalCategoriasActivas' => $totalCategoriasActivas,
+            'crearProductoUrl' => $crearProductoUrl,
+            'crearCategoriaUrl' => $crearCategoriaUrl,
+        ]);
     }
 
     public function configureDashboard(): Dashboard
