@@ -5,12 +5,59 @@
 {% block content %}
     <h1 class="mb-4">Crear nuevo usuario</h1>
 
-    {{ form_start(form) }}
+    {{ form_start(form , { attr: { id: 'form-usuario' } }) }}
         <div class="mb-3">
-            {{ form_widget(form) }}
+            {{ form_label(form.nombre) }}
+            {{ form_widget(form.nombre) }}
+            <div class="mensaje-error text-danger mt-1" id="error-usuario_nombre"></div>
         </div>
 
-        <button class="btn btn-success">Crear</button>
+        <div class="mb-3">
+            {{ form_label(form.apellidos) }}
+            {{ form_widget(form.apellidos) }}
+            <div class="mensaje-error text-danger mt-1" id="error-usuario_apellidos"></div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+            {{ form_errors(form.email) }}
+            <div class="mensaje-error text-danger mt-1" id="error-usuario_email"></div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.direccion) }}
+            {{ form_widget(form.direccion) }}
+            <div class="mensaje-error text-danger mt-1" id="error-usuario_direccion"></div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.telefono) }}
+            {{ form_widget(form.telefono) }}
+            <div class="mensaje-error text-danger mt-1" id="error-usuario_telefono"></div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.password) }}
+            {{ form_widget(form.password) }}
+            <div class="mensaje-error text-danger mt-1" id="error-usuario_password"></div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_row(form.activo) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.roles) }}
+            {{ form_widget(form.roles) }}
+        </div>
+
+        <button id="usuario_submit" class="btn btn-success">Crear</button>
         <a href="{{ path('usuarios_index') }}" class="btn btn-secondary">Cancelar</a>
     {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/admin_usuario.js') }}"></script>
 {% endblock %}
