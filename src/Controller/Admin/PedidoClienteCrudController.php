@@ -55,7 +55,7 @@ class PedidoClienteCrudController extends AbstractCrudController
         }
 
         //Para la vista de detalle
-        if ($pageName === Crud::PAGE_EDIT) {
+        if ($pageName === Crud::PAGE_DETAIL) {
             return [
                 IdField::new('id')->hideOnForm(),
                 AssociationField::new('usuario', 'Cliente'),
@@ -100,7 +100,8 @@ class PedidoClienteCrudController extends AbstractCrudController
             !$this->security->isGranted('ROLE_ADMIN')) {
             
             return $actions
-                ->disable(Action::NEW, Action::EDIT, Action::DELETE);
+                ->disable(Action::NEW, Action::EDIT, Action::DELETE)
+                ->add(Crud::PAGE_INDEX, Action::DETAIL);
         }
 
         return $actions
