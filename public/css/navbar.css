@@ -62,3 +62,14 @@
   min-width: 0 !important;
 }
 
+.navbar-nav .nav-link .bi-cart-fill {
+  font-size: 1.3rem;
+  color: #2e7d32; 
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link .bi-cart-fill:hover {
+  color: #1b5e20;
+}
+
+
