@@ -2,10 +2,6 @@
   background-color: #e8f5e9; 
 }
 
-.navbar-brand {
-  font-size: 1.5rem;
-}
-
 .navbar-link {
   display: block;
   padding: 0.5rem 1rem;
@@ -26,7 +22,6 @@
   border-color: #2e7d32;
 }
 
-/* Para la parte derecha del navbar */
 .navbar .btn {
   padding: 0.375rem 0.75rem;
   font-size: 0.9rem;
@@ -36,3 +31,34 @@
 .navbar .btn:hover {
   transform: scale(1.05);
 }
+
+/* Personaliza el dropdown del perfil */
+.dropdown-menu {
+  border-radius: 0.5rem;
+  padding: 0.5rem 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.dropdown-item {
+  color: #2e7d32;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(46, 125, 50, 0.1);
+  color: #1b5e20;
+}
+
+/* Ajusta los enlaces centrales para que se centren realmente */
+.navbar-nav.mx-lg-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* El perfil no tiene ancho fijo ni espacios extras */
+.navbar-nav.w-lg-auto {
+  width: auto !important;
+  min-width: 0 !important;
+}
+
