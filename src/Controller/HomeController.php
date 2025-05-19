@@ -17,4 +17,10 @@ final class HomeController extends AbstractController
             'categoriasDestacadas' => $categoriasDestacadas
         ]);
     }
+
+    #[Route('/sobre_nosotros', name: 'app_sobre_nosotros')]
+    public function sobreNosotros(): Response
+    {
+        return $this->render('sobre_nosotros.html.twig');
+    }
 }

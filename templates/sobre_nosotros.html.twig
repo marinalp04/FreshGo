@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sobre Nosotros - Fresh&Go{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/sobre_nosotros.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <h1 class="text-center text-success mb-4 fw-bold">Sobre Fresh&Go</h1>
+
+  <div class="row align-items-center mb-5">
+    <div class="col-lg-6">
+      <img src="{{ asset('images/equipo_freshgo.jpg') }}" alt="Equipo Fresh&Go" class="img-fluid rounded shadow-sm">
+    </div>
+    <div class="col-lg-6">
+      <p class="lead text-muted">
+        En Fresh&Go nos apasiona ofrecer comida saludable, fresca y lista para llevar. Nuestra misión es ayudarte a cuidar tu alimentación sin complicaciones, con platos nutritivos, deliciosos y elaborados con ingredientes de calidad y sostenibles.
+      </p>
+      <p class="text-secondary">
+        Desde nuestros comienzos, hemos crecido gracias a la confianza de nuestros clientes, combinando tradición y modernidad para crear recetas innovadoras y equilibradas. Creemos en un mundo donde comer sano es fácil y accesible para todos.
+      </p>
+    </div>
+  </div>
+
+  <div class="row text-center mb-5">
+  <h2 class="fw-bold text-success mb-4">Nuestro Impacto</h2>
+
+  <div class="col-md-4 mb-4">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-body">
+        <h3 class="text-success fw-bold">+10.000</h3>
+        <p class="text-muted mb-0">Platos saludables entregados a domicilio en el último año.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 mb-4">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-body">
+        <h3 class="text-success fw-bold">98%</h3>
+        <p class="text-muted mb-0">Clientes satisfechos con la calidad y el sabor de nuestros platos.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 mb-4">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-body">
+        <h3 class="text-success fw-bold">25+</h3>
+        <p class="text-muted mb-0">Proveedores locales que colaboran con nosotros cada semana.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="text-center">
+    <a href="{{ path('app_home') }}" class="btn btn-success btn-lg">Volver al Inicio</a>
+  </div>
+</div>
+{% endblock %}
