@@ -216,5 +216,37 @@ final class PedidosController extends AbstractController
         ]);
     }
 
+    //Funcion para finalizar el pedido
+    #[Route('/pedido/finalizar', name: 'pedido_finalizar', methods: ['POST'])]
+    public function finalizar(
+        EntityManagerInterface $em,
+        Security $security
+    ): Response {
+        $usuario = $security->getUser();
+
+        $pedido = $em->getRepository(PedidoCliente::class)->findOneBy([
+            'usuario' => $usuario,
+            'estado' => 'carrito',
+        ]);
+
+        if (!$pedido) {
+            throw $this->createNotFoundException('No hay pedido activo.');
+        }
+
+        $pedido->setEstado(PedidoCliente::ESTADO_CONFIRMADO);
+        $pedido->setFechaConfirmacion(new \DateTime());
+
+        $em->flush();
+
+        return $this->redirectToRoute('pedido_gracias');
+    }
+
+    //Funcion para mostrar la pagina de gracias
+    #[Route('/pedido/gracias', name: 'pedido_gracias')]
+    public function gracias(): Response
+    {
+        return $this->render('pedidos/gracias.html.twig');
+    }
+
 
 }

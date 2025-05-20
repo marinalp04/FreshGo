@@ -1,0 +1,9 @@
+{# templates/pedido/gracias.html.twig #}
+{% extends 'base.html.twig' %}
+{% block title %}¡Gracias por tu pedido!{% endblock %}
+
+{% block content %}
+<h1>¡Pedido confirmado!</h1>
+<p>Gracias por confiar en nosotros. Pronto recibirás tu pedido.</p>
+<a href="{{ path('app_home') }}">Volver al inicio</a>
+{% endblock %}

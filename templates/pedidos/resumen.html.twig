@@ -39,7 +39,7 @@
 <p><strong>Total:</strong> {{ total|number_format(2) }} €</p>
 <p><strong>Entrega estimada:</strong> {{ fechaEntrega|date('d/m/Y') }}</p>
 
-<form method="post" action="">
+<form method="post" action="{{ path('pedido_finalizar') }}">
     <button type="submit">Confirmar pedido</button>
 </form>
 {% endblock %}
