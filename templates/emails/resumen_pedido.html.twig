@@ -1,0 +1,11 @@
+<h2>Resumen de tu pedido</h2>
+<p>Hola {{ usuario.nombre }}, gracias por tu compra.</p>
+
+<ul>
+    {% for detalle in detalles %}
+        <li>{{ detalle.cantidad }} x {{ detalle.producto.nombre }} – {{ detalle.precioUnitario }}€</li>
+    {% endfor %}
+</ul>
+
+<p>Total: {{ pedido.getTotal() }}€</p>
+<p>Fecha estimada de entrega: {{ pedido.fechaConfirmacion|date('d/m/Y') }}</p>

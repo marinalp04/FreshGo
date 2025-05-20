@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Producto;
 use App\Entity\PedidoCliente;
 use App\Entity\DetallePedidoCliente;
+use App\Service\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security as SecurityBundleSecurity;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -220,8 +221,10 @@ final class PedidosController extends AbstractController
     #[Route('/pedido/finalizar', name: 'pedido_finalizar', methods: ['POST'])]
     public function finalizar(
         EntityManagerInterface $em,
-        Security $security
+        Security $security,
+        EmailService $emailService
     ): Response {
+        /** @var \App\Entity\Usuario $usuario */
         $usuario = $security->getUser();
 
         $pedido = $em->getRepository(PedidoCliente::class)->findOneBy([
@@ -235,6 +238,16 @@ final class PedidosController extends AbstractController
 
         $pedido->setEstado(PedidoCliente::ESTADO_CONFIRMADO);
         $pedido->setFechaConfirmacion(new \DateTime());
+
+        // Enviar el resumen del pedido con PHPMailer
+        $resumenHtml = $this->renderView('emails/resumen_pedido.html.twig', [
+            'pedido' => $pedido,
+            'detalles' => $pedido->getDetallePedidoClientes(),
+            'usuario' => $usuario,
+        ]);
+        
+
+        $emailService->enviarResumenPedido($usuario->getEmail(), $usuario->getNombre(), $resumenHtml);
 
         $em->flush();
 
