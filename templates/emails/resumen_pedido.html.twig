@@ -1,11 +1,28 @@
-<h2>Resumen de tu pedido</h2>
-<p>Hola {{ usuario.nombre }}, gracias por tu compra.</p>
+<div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+    <h2 style="color: #2ecc71;">¡Gracias por tu pedido en Fresh&Go!</h2>
 
-<ul>
-    {% for detalle in detalles %}
-        <li>{{ detalle.cantidad }} x {{ detalle.producto.nombre }} – {{ detalle.precioUnitario }}€</li>
-    {% endfor %}
-</ul>
+    <p>Hola <strong>{{ usuario.nombre }}</strong>,</p>
+    <p>Hemos recibido tu pedido <strong>#{{ pedido.id }}</strong> y lo estamos preparando con mucho cariño.</p>
 
-<p>Total: {{ pedido.getTotal() }}€</p>
-<p>Fecha estimada de entrega: {{ pedido.fechaConfirmacion|date('d/m/Y') }}</p>
+    <h3>Detalles del pedido:</h3>
+    <ul style="list-style: none; padding-left: 0;">
+        {% for detalle in detalles %}
+            <li style="margin-bottom: 5px;">
+                {{ detalle.cantidad }} × <strong>{{ detalle.producto.nombre }}</strong> — {{ detalle.precioUnitario }}€
+            </li>
+        {% endfor %}
+    </ul>
+
+    <p><strong>Total:</strong> {{ pedido.getTotal() }}€</p>
+
+    <p>
+        <strong>Dirección de entrega:</strong><br>
+        {{ pedido.usuario.direccion }}
+    </p>
+
+    {% set fechaEntrega = pedido.fechaConfirmacion|date_modify('+2 days') %}
+    <p><strong>Fecha estimada de entrega:</strong> {{ pedido.fechaConfirmacion|date('d/m/Y') }}</p>
+
+    <hr style="margin: 20px 0;">
+    <p style="font-size: 0.9em;">Este correo es tu comprobante de pedido. Gracias por confiar en nosotros</p>
+</div>
