@@ -3,6 +3,7 @@ namespace App\Form;
 
 use App\Entity\ComposicionProducto;
 use App\Entity\Ingrediente;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -20,6 +21,10 @@ class ComposicionProductoType extends AbstractType
                     return $ingrediente->getNombre() . ' (' . $ingrediente->getUnidadMedida()->getUnidadAbreviada() . ')';
                 },
                 'placeholder' => 'Selecciona un ingrediente',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('i')
+                            ->orderBy('i.nombre', 'ASC');
+                },
             ])
             ->add('cantidadNecesaria', IntegerType::class, [
                 'attr' => ['min' => 1],
