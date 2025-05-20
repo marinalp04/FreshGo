@@ -12,6 +12,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.4.1",
         "doctrine/orm": "^3.3.2",
         "easycorp/easyadmin-bundle": "^4.24.6",
+        "phpmailer/phpmailer": "^6.10",
         "symfony/console": "7.2.*",
         "symfony/dotenv": "7.2.*",
         "symfony/flex": "^2.4.7",

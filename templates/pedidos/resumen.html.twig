@@ -1,0 +1,45 @@
+{# templates/pedido/resumen.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Resumen de tu pedido{% endblock %}
+
+{% block content %}
+<h1>Resumen de tu pedido</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio unitario</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for detalle in pedido.detallePedidoClientes %}
+            <tr>
+                <td>{{ detalle.producto.nombre }}</td>
+                <td>{{ detalle.cantidad }}</td>
+                <td>{{ detalle.precioUnitario|number_format(2) }} €</td>
+                <td>{{ (detalle.precioUnitario * detalle.cantidad)|number_format(2) }} €</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p><strong>Subtotal:</strong> {{ subtotal|number_format(2) }} €</p>
+
+{% if costeEnvio > 0 %}
+    <p><strong>Coste de envío:</strong> {{ costeEnvio|number_format(2) }} €</p>
+    <p>¡Te faltan {{ faltanParaEnvioGratis|number_format(2) }} € para envío gratis!</p>
+{% else %}
+    <p><strong>¡Tienes envío gratis!</strong></p>
+{% endif %}
+
+<p><strong>Total:</strong> {{ total|number_format(2) }} €</p>
+<p><strong>Entrega estimada:</strong> {{ fechaEntrega|date('d/m/Y') }}</p>
+
+<form method="post" action="">
+    <button type="submit">Confirmar pedido</button>
+</form>
+{% endblock %}

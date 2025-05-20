@@ -24,3 +24,21 @@
     background-color: #b71c1c;
     border-color: #b71c1c;
 }
+
+.boton-confirmar {
+    background-color: #28a745; 
+    color: white;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+}
+
+.boton-confirmar:hover{
+    background-color: #218838;
+    box-shadow: 0 0 8px rgba(33, 136, 56, 0.7);
+    color: white;
+    text-decoration: none;
+    outline: none;
+}
+

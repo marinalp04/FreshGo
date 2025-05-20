@@ -169,7 +169,52 @@ final class PedidosController extends AbstractController
         }
 
         return $this->redirectToRoute('mostrar_carrito');
-}
+    }
+
+    //Funcion para mostrar el resumen del pedido
+    #[Route('/pedido/resumen', name: 'pedido_resumen')]
+    public function resumen(
+        EntityManagerInterface $em,
+        Security $security
+    ): Response {
+        $usuario = $security->getUser();
+
+        $pedido = $em->getRepository(PedidoCliente::class)->findOneBy([
+            'usuario' => $usuario,
+            'estado' => 'carrito',
+        ]);
+
+        if (!$pedido || $pedido->getDetallePedidoClientes()->isEmpty()) {
+            return $this->redirectToRoute('mostrar_carrito');
+        }
+
+        $subtotal = 0;
+        foreach ($pedido->getDetallePedidoClientes() as $detalle) {
+            $subtotal += $detalle->getPrecioUnitario() * $detalle->getCantidad();
+        }
+
+        $envioGratisMinimo = 30;
+        $costeEnvio = 0;
+        $faltan = 0;
+
+        if ($subtotal < $envioGratisMinimo) {
+            $costeEnvio = 3.99;
+            $faltan = $envioGratisMinimo - $subtotal;
+        }
+
+        $total = $subtotal + $costeEnvio;
+
+        $fechaEntrega = (new \DateTime())->modify('+2 days');
+
+        return $this->render('pedidos/resumen.html.twig', [
+            'pedido' => $pedido,
+            'subtotal' => $subtotal,
+            'costeEnvio' => $costeEnvio,
+            'total' => $total,
+            'faltanParaEnvioGratis' => $faltan,
+            'fechaEntrega' => $fechaEntrega,
+        ]);
+    }
 
 
 }
