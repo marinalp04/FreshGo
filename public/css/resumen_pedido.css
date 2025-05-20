@@ -1,0 +1,12 @@
+.titulo-verde {
+    color: #2e7d32;
+    font-weight: bold;
+}
+
+.borde-redondeado {
+    border-radius: 15px;
+}
+
+.sombra {
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
