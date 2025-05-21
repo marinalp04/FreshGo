@@ -143,4 +143,30 @@ class PedidoCliente
 
         return $this;
     }
+
+    //Funciones para calcular el total del pedido
+    public function getSubtotal(): float
+    {
+        $subtotal = 0;
+        foreach ($this->getDetallePedidoClientes() as $detalle) {
+            $subtotal += $detalle->getPrecioUnitario() * $detalle->getCantidad();
+        }
+        return $subtotal;
+    }
+
+    public function getCosteEnvio(): float
+    {
+        return $this->getSubtotal() < 30 ? 3.99 : 0;
+    }
+
+    public function calcularTotal(): float
+    {
+        return $this->getSubtotal() + $this->getCosteEnvio();
+    }
+
+    public function getFaltanParaEnvioGratis(): float
+    {
+        $faltan = 30 - $this->getSubtotal();
+        return $faltan > 0 ? $faltan : 0;
+    }
 }

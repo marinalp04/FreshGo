@@ -8,12 +8,14 @@
     <ul style="list-style: none; padding-left: 0;">
         {% for detalle in detalles %}
             <li style="margin-bottom: 5px;">
-                {{ detalle.cantidad }} × <strong>{{ detalle.producto.nombre }}</strong> — {{ detalle.precioUnitario }}€
+                {{ detalle.cantidad }} × <strong>{{ detalle.producto.nombre }}</strong> — {{ detalle.precioUnitario|number_format(2) }}€
             </li>
         {% endfor %}
     </ul>
 
-    <p><strong>Total:</strong> {{ pedido.getTotal() }}€</p>
+    <p>Subtotal: {{ pedido.getSubtotal()|number_format(2) }} €</p>
+    <p>Coste de envío: {{ pedido.getCosteEnvio()|number_format(2) }} €</p>
+    <p><strong>Total: {{ pedido.calcularTotal()|number_format(2) }} €</strong></p>
 
     <p>
         <strong>Dirección de entrega:</strong><br>

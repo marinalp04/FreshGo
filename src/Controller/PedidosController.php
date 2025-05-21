@@ -188,31 +188,15 @@ final class PedidosController extends AbstractController
         if (!$pedido || $pedido->getDetallePedidoClientes()->isEmpty()) {
             return $this->redirectToRoute('mostrar_carrito');
         }
-
-        $subtotal = 0;
-        foreach ($pedido->getDetallePedidoClientes() as $detalle) {
-            $subtotal += $detalle->getPrecioUnitario() * $detalle->getCantidad();
-        }
-
-        $envioGratisMinimo = 30;
-        $costeEnvio = 0;
-        $faltan = 0;
-
-        if ($subtotal < $envioGratisMinimo) {
-            $costeEnvio = 3.99;
-            $faltan = $envioGratisMinimo - $subtotal;
-        }
-
-        $total = $subtotal + $costeEnvio;
-
+      
         $fechaEntrega = (new \DateTime())->modify('+2 days');
 
         return $this->render('pedidos/resumen.html.twig', [
             'pedido' => $pedido,
-            'subtotal' => $subtotal,
-            'costeEnvio' => $costeEnvio,
-            'total' => $total,
-            'faltanParaEnvioGratis' => $faltan,
+            'subtotal' => $pedido->getSubtotal(),
+            'costeEnvio' => $pedido->getCosteEnvio(),
+            'total' => $pedido->calcularTotal(),
+            'faltanParaEnvioGratis' => $pedido->getFaltanParaEnvioGratis(),
             'fechaEntrega' => $fechaEntrega,
         ]);
     }
@@ -238,6 +222,8 @@ final class PedidosController extends AbstractController
 
         $pedido->setEstado(PedidoCliente::ESTADO_CONFIRMADO);
         $pedido->setFechaConfirmacion(new \DateTime());
+        $pedido->setTotal($pedido->calcularTotal());
+
 
         // Enviar el resumen del pedido con PHPMailer
         $resumenHtml = $this->renderView('emails/resumen_pedido.html.twig', [
