@@ -32,7 +32,15 @@ body {
   border-left: 0;
 }
 
-.mensaje-error {
+.mensaje-error {  
   margin-top: 0.25rem;
 }
-  
+
+.input-group .toggle-password{
+  border: 1px solid #ced4da; 
+}
+
+.input-group .btn-outline-secondary {
+    border: 1px solid #ced4da;
+    border-left: none;
+}
