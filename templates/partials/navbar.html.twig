@@ -1,66 +1,76 @@
 {% block stylesheets %}
-  <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
 {% endblock %}
 
 <nav class="navbar navbar-expand-lg bg-verde-claro py-3">
-  <div class="container-fluid d-flex align-items-center">
+	<div
+		class="container-fluid d-flex align-items-center justify-content-between">
 
-    <!-- Parte del logo -->
-    <div class="d-flex align-items-center" style="width: 200px;">
-      <a class="navbar-brand m-0 p-0" href="{{ path('app_home') }}">
-        <img src="{{ asset('images/logo.png') }}" alt="Fresh&Go Logo" height="50">
-      </a>
-    </div>
+		<!-- Parte del logo  -->
+		<div class="d-flex align-items-center" style="width: 200px;">
+			<a class="navbar-brand m-0 p-0" href="{{ path('app_home') }}">
+				<img src="{{ asset('images/logo.png') }}" alt="Fresh&Go Logo" height="50">
+			</a>
+		</div>
 
-    <!-- Boton menu hamburguesa -->
-    <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarFreshGo" aria-controls="navbarFreshGo" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+		<!-- Menú central centrado -->
+		<div class="collapse navbar-collapse justify-content-center" id="navbarFreshGo">
+			<ul class="navbar-nav text-center mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a class="navbar-link color-verde" href="{{ path('app_home') }}">Inicio</a>
+				</li>
+				<li class="nav-item">
+					<a class="navbar-link color-verde" href="{{ path('app_categorias') }}">Categorías</a>
+				</li>
+				<li class="nav-item">
+					<a class="navbar-link color-verde" href="{{ path('app_sobre_nosotros') }}">Sobre Nosotros</a>
+				</li>
+			</ul>
+		</div>
 
-    <!-- Menu colapsable -->
-    <div class="collapse navbar-collapse" id="navbarFreshGo">
-		<ul class="navbar-nav mx-auto text-center mb-2 mb-lg-0">
-			<li class="nav-item">
-			<a class="navbar-link color-verde" href="{{ path('app_home') }}">Inicio</a>
-			</li>
-			<li class="nav-item">
-			<a class="navbar-link color-verde" href="{{ path('app_categorias') }}">Categorías</a>
-			</li>
-			<li class="nav-item">
-			<a class="navbar-link color-verde" href="{{ path('app_sobre_nosotros') }}">Sobre Nosotros</a>
-			</li>
-		</ul>
+		<!-- Parte del perfil -->
+		<div class="d-flex align-items-center justify-content-end" style="width: 200px;">
+			<ul class="navbar-nav mb-2 mb-lg-0 d-flex justify-content-lg-end align-items-center w-100">
+				{% if app.user %}
+					<li class="nav-item me-3 position-relative">
+						<a class="nav-link color-verde fs-5 position-relative" href="{{ path('mostrar_carrito') }}" title="Carrito">
+							<i class="bi bi-cart-fill fs-3"></i>
+							{% if cartCount > 0 %}
+								<span class="cart-badge">
+									{{ cartCount }}
+								</span>
+							{% endif %}
+						</a>
+					</li>
 
-		<ul class="navbar-nav mb-2 mb-lg-0 d-flex justify-content-lg-end align-items-center">
-			{% if app.user %}
-			<li class="nav-item me-3">
-				<a class="nav-link color-verde fs-5 position-relative" href="{{ path('mostrar_carrito') }}" title="Carrito">
-				<i class="bi bi-cart-fill fs-3"></i>
-				</a>
-			</li>
-
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle text-success fw-semibold" href="#" id="navbarUserDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-				{{ app.user.email }}
-				</a>
-				<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUserDropdown">
-				{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ADMIN_READONLY') or is_granted('ROLE_SUPER_ADMIN') %}
-					<li><a class="dropdown-item" href="{{ path('admin') }}">Panel Admin</a></li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle text-success fw-semibold d-flex align-items-center" href="#" id="navbarUserDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="bi bi-person-circle fs-4 me-1"></i>
+						</a>
+						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUserDropdown">
+							<li>
+								<a class="dropdown-item" href="#">Mi perfil</a>
+							</li>
+							{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ADMIN_READONLY') or is_granted('ROLE_SUPER_ADMIN') %}
+								<li>
+									<a class="dropdown-item" href="{{ path('admin') }}">Panel Admin</a>
+								</li>
+							{% endif %}
+							<li>
+								<a class="dropdown-item text-danger" href="{{ path('app_logout') }}">Cerrar sesión</a>
+							</li>
+						</ul>
+					</li>
+				{% else %}
+					<li class="nav-item">
+						<a class="btn btn-sm btn-outline-primary me-2" href="{{ path('app_login') }}">Iniciar sesión</a>
+					</li>
+					<li class="nav-item">
+						<a class="btn btn-sm btn-success" href="{{ path('app_registro') }}">Registrarse</a>
+					</li>
 				{% endif %}
-				<li><a class="dropdown-item text-danger" href="{{ path('app_logout') }}">Cerrar sesión</a></li>
-				</ul>
-			</li>
-			{% else %}
-			<li class="nav-item">
-				<a class="btn btn-sm btn-outline-primary me-2" href="{{ path('app_login') }}">Iniciar sesión</a>
-			</li>
-			<li class="nav-item">
-				<a class="btn btn-sm btn-success" href="{{ path('app_registro') }}">Registrarse</a>
-			</li>
-			{% endif %}
-		</ul>
-      </div>
-    </div>
-  </div>
-</nav>
+			</ul>
+		</div>
 
+	</div>
+</nav>
