@@ -87,4 +87,26 @@
   text-align: center;
 }
 
+@media (min-width: 992px) {
+  #navbarFreshGo {
+    display: flex !important;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  /* Enlaces centrales centrados con auto margins */
+  #navbarFreshGo > ul.navbar-nav:first-child {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Contenedor carrito y perfil a la derecha, sin w-100 */
+  #navbarFreshGo > ul.navbar-nav:last-child {
+    width: auto !important;
+  }
+  .ajustar-ancho{
+    width: 200px;
+  }
+}
+
 
