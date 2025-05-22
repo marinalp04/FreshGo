@@ -235,6 +235,24 @@ final class PedidosController extends AbstractController
 
         $emailService->enviarResumenPedido($usuario->getEmail(), $usuario->getNombre(), $resumenHtml);
 
+        //Gestionar stock
+        foreach ($pedido->getDetallePedidoClientes() as $detalle) {
+            $producto = $detalle->getProducto();
+            $cantidadProducto = $detalle->getCantidad();
+
+            foreach ($producto->getComposicionProductos() as $composicion) {
+                $ingrediente = $composicion->getIngrediente();
+                $cantidadNecesariaPorUnidad = $composicion->getCantidadNecesaria();
+
+                $cantidadTotalNecesaria = $cantidadProducto * $cantidadNecesariaPorUnidad;
+
+                $stockActual = $ingrediente->getStock();
+                $nuevoStock = $stockActual - $cantidadTotalNecesaria;
+                $ingrediente->setStock($nuevoStock);
+            }
+    }   
+
+
         $em->flush();
 
         return $this->redirectToRoute('pedido_gracias');

@@ -17,9 +17,12 @@ final class ProductosController extends AbstractController{
             throw $this->createNotFoundException('Producto no disponible o inactivo');
         }
 
+        $cantidadMaxima = $producto->getCantidadMaximaDisponible();
+
         return $this->render('producto/index.html.twig', [
             'producto' => $producto,
             'fotos' => $producto->getFotoProductos(),
+            'cantidadMaxima' => $cantidadMaxima,
         ]);
     }
 

@@ -43,15 +43,26 @@
                 <p class="producto-precio h4 mb-2">Precio: {{ producto.precio }}€</p>
                 <p class="producto-descripcion mb-4">Descripción: {{ producto.descripcion }}</p>
 
+                {% if cantidadMaxima < 1 %}
+                    <p class="text-danger fw-bold">Este plato no está disponible por falta de stock.</p>
+                {% else %}
+                    <p class="text-success">Stock disponible para hasta <strong>{{ cantidadMaxima }}</strong> unidad{{ cantidadMaxima > 1 ? 'es' : '' }}.</p>
+                {% endif %}
+
+
                 <form action="{{ path('anadir_al_carrito', { id: producto.id }) }}" method="post" class="producto-form mb-4">
                     {% if app.user %}
-                        <div class="d-flex flex-column flex-md-row align-items-start gap-2">
-                            <div>
-                                <label for="cantidad" class="form-label fw-semibold">Cantidad:</label>
-                                <input type="number" id="cantidad" name="cantidad" value="1" min="1" class="form-control w-auto">
+                        {% if cantidadMaxima > 0 %}
+                            <div class="d-flex flex-column flex-md-row align-items-start gap-2">
+                                <div>
+                                    <label for="cantidad" class="form-label fw-semibold">Cantidad:</label>
+                                    <input type="number" id="cantidad" name="cantidad" value="1" min="1" max="{{ cantidadMaxima }}" class="form-control w-auto">
+                                </div>
+                                <button type="submit" class="btn btn-success mt-2 mt-md-4">Añadir al carrito</button>
                             </div>
-                            <button type="submit" class="btn btn-success mt-2 mt-md-4">Añadir al carrito</button>
-                        </div>
+                        {% else %}
+                            <div class="alert alert-danger mt-3">Este plato no se puede añadir al carrito actualmente.</div>
+                        {% endif %}
                     {% else %}
                         <div class="alert alert-warning mt-3">
                             <a href="{{ path('app_login', { redirectTo: path('producto_detalle', { id: producto.id }) }) }}" class="alert-link">

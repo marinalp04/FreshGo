@@ -256,4 +256,38 @@ class Producto
         return $this;
     }
 
+    //Funciones para gestionar stock
+    public function tieneStockSuficiente(int $cantidadPedida): bool
+    {
+        foreach ($this->getComposicionProductos() as $composicion) {
+            $ingrediente = $composicion->getIngrediente();
+            $stockDisponible = $ingrediente->getStock();
+            $cantidadNecesaria = $composicion->getCantidadNecesaria() * $cantidadPedida;
+
+            if ($stockDisponible < $cantidadNecesaria) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function getCantidadMaximaDisponible(): int
+    {
+        $minPlatos = PHP_INT_MAX;
+
+        foreach ($this->getComposicionProductos() as $composicion) {
+            $ingrediente = $composicion->getIngrediente();
+            $stockDisponible = $ingrediente->getStock();
+            $cantidadNecesaria = $composicion->getCantidadNecesaria();
+
+            $maxPlatosPorIngrediente = floor($stockDisponible / $cantidadNecesaria);
+
+            $minPlatos = min($minPlatos, $maxPlatosPorIngrediente);
+        }
+
+        return $minPlatos;
+    }
+
+
 }
