@@ -43,6 +43,17 @@
                 <p class="producto-precio h4 mb-2">Precio: {{ producto.precio }}€</p>
                 <p class="producto-descripcion mb-4">Descripción: {{ producto.descripcion }}</p>
 
+                {% if producto.composicionProductos|length > 0 %}
+                    <p class="text-muted small mt-3">
+                    <strong>Ingredientes: </strong>
+                    {% for composicion in producto.composicionProductos %}
+                        {{ composicion.ingrediente.nombre }} {{ composicion.cantidadNecesaria }} {{ composicion.ingrediente.unidadMedida.unidadAbreviada }}{% if not loop.last %}, {% else %}.{% endif %}
+                    {% endfor %}
+                    </p>
+                {% else %}
+                    <p>No se han definido ingredientes para este plato.</p>
+                {% endif %}
+
                 {% if cantidadMaxima < 1 %}
                     <p class="text-danger fw-bold">Este plato no está disponible por falta de stock.</p>
                 {% else %}
