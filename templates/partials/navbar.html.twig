@@ -34,7 +34,7 @@
 			</div>
 
             <!-- Parte del carrito y perfil-->
-			<div class="d-flex align-items-center justify-content-center justify-content-lg-end ajustar-ancho">
+			<div class="d-flex align-items-center justify-content-center justify-content-lg-end">
 				<ul class="navbar-nav mb-2 mb-lg-0 d-flex justify-content-lg-end align-items-center">
 					{% if app.user %}
 						<li class="nav-item me-3 position-relative">
@@ -68,7 +68,7 @@
 						</li>
 					{% else %}
 						<li class="nav-item">
-							<a class="btn btn-sm btn-outline-primary me-2" href="{{ path('app_login') }}">Iniciar sesión</a>
+							<a class="btn btn-sm btn-outline-primary me-2 boton-login" href="{{ path('app_login') }}">Iniciar sesión</a>
 						</li>
 						<li class="nav-item">
 							<a class="btn btn-sm btn-success" href="{{ path('app_registro') }}">Registrarse</a>

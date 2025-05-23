@@ -23,7 +23,7 @@
     </p>
 
     {% set fechaEntrega = pedido.fechaConfirmacion|date_modify('+2 days') %}
-    <p><strong>Fecha estimada de entrega:</strong> {{ pedido.fechaConfirmacion|date('d/m/Y') }}</p>
+    <p><strong>Fecha estimada de entrega:</strong> {{ pedido.fechaConfirmacion|date_modify('+2 days')|date('d/m/Y') }}</p>
 
     <hr style="margin: 20px 0;">
     <p style="font-size: 0.9em;">Este correo es tu comprobante de pedido. Gracias por confiar en nosotros</p>
