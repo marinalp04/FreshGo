@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Página no encontrada - Fresh&Go{% endblock %}
+
+{% block body %}
+    <div class="container text-center py-5">
+        <img src="{{ asset('images/logo.png') }}" alt="Fresh&Go" height="80" class="mb-4">
+        <h1 class="display-4 text-success fw-bold">¡Vaya!</h1>
+        <p class="lead text-muted mb-4">La página que estás buscando no existe o ha sido movida.</p>
+        <a href="{{ path('app_home') }}" class="btn btn-success px-4 py-2">Volver al inicio</a>
+    </div>
+{% endblock %}
