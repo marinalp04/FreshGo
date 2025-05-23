@@ -33,6 +33,7 @@
                                     <i class="bi bi-eye" id="icon-{{ field.vars.id }}"></i>
                                 </button>
                             </div>
+                            <div id="password-strength" class="mt-1 small"></div>
                         {% else %}
                             {{ form_widget(field, {'attr': {'class': 'form-control'}}) }}
                         {% endif %}

@@ -114,5 +114,37 @@ document.addEventListener('DOMContentLoaded', function () {
             icon.classList.toggle('bi-eye-slash');
         });
     });
+
+    //Para la fuerza de la contraseña
+    const passwordInput = document.getElementById('registration_password');
+    const strengthDiv = document.getElementById('password-strength');
+
+    if (passwordInput && strengthDiv) {
+        passwordInput.addEventListener('input', function () {
+            const strength = getPasswordStrength(passwordInput.value);
+            strengthDiv.textContent = strength.message;
+            strengthDiv.className = `mt-1 small text-${strength.color}`;
+        });
+    }
+
+    function getPasswordStrength(password) {
+        let score = 0;
+        if (password.length >= 8) score++;
+        if (/[A-Z]/.test(password)) score++;
+        if (/[a-z]/.test(password)) score++;
+        if (/\d/.test(password)) score++;
+        if (/[@$!%*?&#]/.test(password)) score++;
+
+        if (score <= 2) {
+            return { message: 'Débil', color: 'danger' };
+        } else if (score <= 4) {
+            return { message: 'Media', color: 'warning' };
+        } else {
+            return { message: 'Fuerte', color: 'success' };
+        }
+    }
+
+
+
 });
 
