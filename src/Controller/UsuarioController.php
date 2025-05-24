@@ -8,6 +8,7 @@ use App\Repository\UsuarioRepository;
 use App\Service\UsuarioManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -96,32 +97,54 @@ class UsuarioController extends AbstractController
         ]);
     }
 
-   #[Route('/admin/usuarios/{id}/delete', name: 'usuario_delete', methods: ['POST'])]
-    public function delete(
-        Request $request,
-        Usuario $usuario,
-        EntityManagerInterface $entityManager
-    ): Response {
-        if ($this->isCsrfTokenValid('delete_usuario_' . $usuario->getId(), $request->request->get('_token'))) {
-            if (count($usuario->getPedidoClientes()) > 0) {
-                $this->addFlash('warning', 'Este usuario tiene pedidos asociados y no puede eliminarse. Puedes desactivarlo desde la edición.');
-            } else {
-                $entityManager->remove($usuario);
-                $entityManager->flush();
-            }
-        }
+#[Route('/admin/usuarios/{id}/delete', name: 'usuario_delete', methods: ['POST'])]
+public function delete(
+    Request $request,
+    Usuario $usuario,
+    EntityManagerInterface $entityManager,
+    Security $security
+): Response {
+    if ($this->isCsrfTokenValid('delete_usuario_' . $usuario->getId(), $request->request->get('_token'))) {
 
-        return $this->redirectToRoute('usuarios_index');
+        /** @var \App\Entity\Usuario $currentUser */
+        $currentUser = $security->getUser();
+
+        // Si el usuario a borrar es el que está autenticado
+        if ($currentUser && $currentUser->getId() === $usuario->getId()) {
+            $this->addFlash('danger', 'No puedes eliminar tu propio usuario.');
+        }
+        //Si es SUPERADMIN
+        elseif (in_array('ROLE_SUPERADMIN', $usuario->getRoles())) {
+            $this->addFlash('danger', 'Este usuario tiene el rol SUPERADMIN. No puedes eliminarlo directamente. Puedes editarlo y quitarle ese rol si lo deseas.');
+        }
+        //Si tiene pedidos
+        elseif (count($usuario->getPedidoClientes()) > 0) {
+            $this->addFlash('warning', 'Este usuario tiene pedidos asociados y no puede eliminarse. Puedes desactivarlo desde la edición.');
+        }
+        //Si no, se elimina
+        else {
+            $entityManager->remove($usuario);
+            $entityManager->flush();
+            $this->addFlash('success', 'Usuario eliminado correctamente.');
+        }
     }
 
+    return $this->redirectToRoute('usuarios_index');
+}
+
+
     #[Route('/admin/usuarios/{id}/confirm-delete', name: 'usuario_confirm_delete', methods: ['GET'])]
-    public function confirmDelete(Usuario $usuario, EntityManagerInterface $em): Response
+    public function confirmDelete(Usuario $usuario, EntityManagerInterface $em,  Security $security,): Response
     {
         $pedidos = $usuario->getPedidoClientes(); 
+        $usuarios = $em->getRepository(Usuario::class)->findAll();
+        $usuarioActual = $security->getUser();
 
         return $this->render('admin/usuario/confirm_delete.html.twig', [
             'usuario' => $usuario,
             'pedidos' => $pedidos,
+            'usuarios' => $usuarios,
+            'usuarioActual' => $usuarioActual,
         ]);
     }
 

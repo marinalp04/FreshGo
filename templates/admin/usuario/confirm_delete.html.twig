@@ -6,13 +6,27 @@
         <div class="card-header bg-warning text-dark">
             <h3 class="mb-0">Gestionar usuario</h3>
         </div>
+        {% set esSuperadmin = 'ROLE_SUPERADMIN' in usuario.roles %}
+        {% set esUsuarioActual = usuario.id == usuarioActual.id %}
+
         <div class="card-body">
-            {% if pedidos|length > 0 %}
+            {% if esUsuarioActual %}
+                <div class="alert alert-danger">
+                    <p>No puedes eliminar tu propio usuario.</p>
+                    <a href="{{ path('usuarios_index') }}" class="btn btn-secondary">Volver</a>
+                </div>
+            {% elseif esSuperadmin %}
+                <div class="alert alert-danger">
+                    <p>Este usuario tiene el rol <strong>SUPERADMIN</strong>. No puedes eliminarlo directamente.</p>
+                    <p>Puedes editarlo y quitarle ese rol si lo deseas.</p>
+                    <a href="{{ path('usuarios_index') }}" class="btn btn-secondary">Volver</a>
+                </div>
+            {% elseif pedidos|length > 0 %}
                 <div class="alert alert-danger">
                     <p>El usuario <strong>{{ usuario.email }}</strong> tiene <strong>{{ pedidos|length }}</strong> pedido{{ pedidos|length > 1 ? 's' : '' }} asociado{{ pedidos|length > 1 ? 's' : '' }}.</p>
                     <p>No se puede eliminar. Puedes desactivarlo desde la edición del usuario.</p>
+                    <a href="{{ path('usuarios_index') }}" class="btn btn-secondary">Volver</a>
                 </div>
-                <a href="{{ path('usuarios_index') }}" class="btn btn-secondary">Volver</a>
             {% else %}
                 <div class="alert alert-warning">
                     <p>¿Estás seguro de que deseas eliminar al usuario <strong>{{ usuario.nombre }} {{ usuario.apellidos }}</strong>? No tiene pedidos asociados.</p>
@@ -23,6 +37,7 @@
                     <a href="{{ path('usuarios_index') }}" class="btn btn-secondary">Cancelar</a>
                 </form>
             {% endif %}
+
         </div>
     </div>
 </div>
