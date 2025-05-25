@@ -16,6 +16,7 @@ class UsuarioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $isEdit = $options['is_edit'];
+        $showRoles = $options['show_roles'];
 
         $builder
             ->add('nombre', null, [
@@ -26,6 +27,7 @@ class UsuarioType extends AbstractType
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Correo electrónico',
+                'disabled' => $isEdit,
                 'attr' => ['class' => 'form-control'],
             ])
             ->add('direccion' , null, [
@@ -43,7 +45,10 @@ class UsuarioType extends AbstractType
                     'autocomplete' => 'new-password',
                     'class' => 'form-control'
                 ],
-            ])
+            ]);
+
+        if ($showRoles) {
+            $builder
              ->add('activo', CheckboxType::class, [
                 'label' => 'Usuario activo',
                 'required' => false,
@@ -73,6 +78,7 @@ class UsuarioType extends AbstractType
                 return [$roleString];
             }
             ));
+        }
 
     }
 
@@ -81,6 +87,7 @@ class UsuarioType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Usuario::class,
             'is_edit' => false,
+            'show_roles' => true,
         ]);
     }
 }

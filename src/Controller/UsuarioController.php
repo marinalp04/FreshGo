@@ -69,6 +69,7 @@ class UsuarioController extends AbstractController
     ): Response {
         $form = $this->createForm(UsuarioType::class, $usuario, [
             'is_edit' => true, 
+            'show_roles' => true,
         ]);
         $form->handleRequest($request);
 

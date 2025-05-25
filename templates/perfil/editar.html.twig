@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Perfil{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Editar Perfil</h2>
+
+  
+
+    {{ form_start(form , { attr: { id: 'form-usuario' } }) }}
+        <div class="mb-3">
+            {{ form_label(form.nombre) }}
+            {{ form_widget(form.nombre) }}
+           <div class="mensaje-error text-danger mt-1" id="error-usuario_nombre"></div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.apellidos) }}
+            {{ form_widget(form.apellidos) }}
+            <div class="mensaje-error text-danger mt-1" id="error-usuario_apellidos"></div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+           <div class="mensaje-error text-danger mt-1" id="error-usuario_email"></div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.direccion) }}
+            {{ form_widget(form.direccion) }}
+            <div class="mensaje-error text-danger mt-1" id="error-usuario_direccion"></div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.telefono) }}
+            {{ form_widget(form.telefono) }}
+            <div class="mensaje-error text-danger mt-1" id="error-usuario_telefono"></div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.password) }}
+            {{ form_widget(form.password) }}
+           
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/admin_usuario.js') }}"></script>
+{% endblock %}
