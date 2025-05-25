@@ -54,7 +54,7 @@
 							</a>
 							<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUserDropdown">
 								<li>
-									<a class="dropdown-item" href="#">Mi perfil</a>
+									<a class="dropdown-item" href="{{ path('app_perfil') }}">Mi perfil</a>
 								</li>
 								{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ADMIN_READONLY') or is_granted('ROLE_SUPER_ADMIN') %}
 									<li>

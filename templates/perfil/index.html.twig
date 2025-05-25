@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mi perfil{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Mi Perfil</h2>
+    <table class="table table-bordered mt-4">
+        <tr>
+            <th>Nombre</th>
+            <td>{{ usuario.nombre }}</td>
+        </tr>
+        <tr>
+            <th>Apellidos</th>
+            <td>{{ usuario.apellidos }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ usuario.email }}</td>
+        </tr>
+        <tr>
+            <th>Dirección</th>
+            <td>{{ usuario.direccion }}</td>
+        </tr>
+        <tr>
+            <th>Teléfono</th>
+            <td>{{ usuario.telefono }}</td>
+        </tr>
+    </table>
+
+    <a href="" class="btn btn-primary">Editar perfil</a>
+</div>
+{% endblock %}

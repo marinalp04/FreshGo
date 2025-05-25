@@ -103,9 +103,9 @@
 
 .navbar .btn.boton-login {
   white-space: nowrap;
-  padding: 0.375rem 1rem; /* opcional: refuerza el padding horizontal */
-  min-width: 300px;       /* fuerza el ancho mínimo */
-  display: inline-block;  /* asegura el comportamiento correcto */
+  padding: 0.375rem 1rem; 
+  min-width: 50px;       
+  display: inline-block;  
   text-align: center;
 }
 
