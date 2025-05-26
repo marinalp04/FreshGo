@@ -17,8 +17,27 @@
             </div>
 
             <div class="row g-4 justify-content-center" id="contenedor-categorias">
-                {% include 'categorias/_lista.html.twig' with { categorias: categorias } %}
-            </div>
+               {% for categoria in categorias %}
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 categoria-item">
+                        <a href="{{ path('categoria_productos', {'id': categoria.id}) }}" class="text-decoration-none">
+                            <div class="card categoria-card h-100 shadow-sm">
+                                <div class="categoria-imagen">
+                                    <img src="{{ asset('uploads/fotos_categorias/' ~ categoria.foto) }}" class="card-img-top" alt="Imagen de {{ categoria.nombre }}">
+                                </div>
+                                <div class="card-body text-center">
+                                    <h5 class="card-title text-success">{{ categoria.nombre }}</h5>
+                                    <p class="card-text text-muted categoria-descripcion">
+                                        {{ categoria.descripcion }}
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="col-12 text-center">
+                        <p>No hay categorías disponibles.</p>
+                    </div>
+                {% endfor %}
         </div>
     </div>
 {% endblock %}
