@@ -29,5 +29,38 @@
     </table>
 
     <a href="{{ path('perfil_editar') }}" class="btn btn-primary">Editar perfil</a>
+
+    <h4 class="mt-5">Historial de pedidos</h4>
+
+    {% if pedidos is not empty %}
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pedido in pedidos %}
+                    <tr>
+                        <td>{{ pedido.id }}</td>
+                        <td>{{ pedido.fechaConfirmacion|date('d/m/Y H:i') }}</td>
+                        <td>{{ pedido.total|number_format(2, ',', '.') }} €</td>
+                        <td>{{ pedido.estado }}</td>
+                        <td>
+                            <a href="{{ path('perfil_pedido_detalle', { id: pedido.id }) }}" class="btn btn-sm btn-outline-primary">
+                                Ver detalles
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-muted">No tienes pedidos realizados aún.</p>
+    {% endif %}
 </div>
 {% endblock %}

@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\PedidoCliente;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,12 +20,18 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class PerfilController extends AbstractController
 {
     #[Route('/perfil', name: 'app_perfil')]
-    public function index(): Response
+    public function index(EntityManagerInterface $em): Response
     {
         $usuario = $this->getUser();
 
+        $pedidos = $em->getRepository(PedidoCliente::class)->findBy(
+            ['usuario' => $usuario, 'estado' => 'confirmado'],
+            ['fecha_confirmacion' => 'DESC'],
+        );
+
         return $this->render('perfil/index.html.twig', [
             'usuario' => $usuario,
+            'pedidos' => $pedidos,
         ]);
     }
 
@@ -53,12 +60,21 @@ class PerfilController extends AbstractController
             }
 
             $em->flush();
-            
+
             return $this->redirectToRoute('perfil_editar');
         }
 
         return $this->render('perfil/editar.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/perfil/pedido/{id}', name: 'perfil_pedido_detalle')]
+    public function verDetallePedido(PedidoCliente $pedido): Response
+    {
+        return $this->render('perfil/detalle_pedido.html.twig', [
+            'pedido' => $pedido,
+            'detalles' => $pedido->getDetallePedidoClientes(),
         ]);
     }
 
