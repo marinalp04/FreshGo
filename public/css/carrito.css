@@ -47,3 +47,16 @@
     font-size: 0.9rem;
     line-height: 1.2;
 }
+
+/* Añadir scroll para la tabla en pantallas pequeñas y no rompa la plantilla */
+@media (max-width: 544px) {
+    .table-responsive-carrito {
+        overflow-x: auto;
+        max-width: 100%;
+    }
+ 
+    .table-responsive-carrito table {
+        width: 100%;
+        min-width: 600px; 
+    }
+}
