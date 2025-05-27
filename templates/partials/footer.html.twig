@@ -1,0 +1,52 @@
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
+{% endblock %}
+
+<footer class="footer bg-dark text-white pt-5 pb-3 mt-5 text-center">
+    <div class="container">
+
+        <!-- Logo y descripción -->
+        <div class="mb-4">
+            <img src="{{ asset('images/logo.png') }}" alt="Fresh&Go Logo" width="120" class="mb-2">
+            <p class="small">Comida saludable lista para disfrutar donde quieras.</p>
+        </div>
+
+        <!-- Enlaces rápidos -->
+        <div class="mb-4">
+            <a href="{{ path('app_home') }}" class="footer-link mx-2">Inicio</a>
+            <a href="{{ path('app_categorias') }}" class="footer-link mx-2">Categorías</a>
+            <a href="#" class="footer-link mx-2">Contacto</a>
+            <a href="#" class="footer-link mx-2">Aviso legal</a>
+        </div>
+
+        <!-- Redes sociales -->
+        <div class="row justify-content-center text-center my-4">
+            <div class="col-10 col-sm-6 col-md-3 col-lg-2">
+                <img src="{{ asset('icons/icon-instagram.svg') }}" alt="Instagram" class="redes-icon mb-2" style="width: 40px;">
+                <h6 class="text-success mb-1">Instagram</h6>
+                <p class="small">Síguenos para recetas, tips saludables y novedades.</p>
+            </div>
+            <div class="col-10 col-sm-6 col-md-3 col-lg-2">
+                <img src="{{ asset('icons/icon-facebook.svg') }}" alt="Facebook" class="redes-icon mb-2" style="width: 40px;">
+                <h6 class="text-success mb-1">Facebook</h6>
+                <p class="small">Únete a nuestra comunidad y comparte tu experiencia Fresh&Go.</p>
+            </div>
+            <div class="col-10 col-sm-6 col-md-3 col-lg-2">
+                <img src="{{ asset('icons/icon-tiktok.svg') }}" alt="Twitter" class="redes-icon mb-2" style="width: 40px;">
+                <h6 class="text-success mb-1">TikTok</h6>
+                <p class="small">Descubre novedades, sorteos y más en nuestra cuenta oficial.</p>
+            </div>
+        </div>
+
+
+
+        <hr class="border-secondary">
+
+        <!-- Derechos -->
+        <div class="small">
+            © {{ "now"|date("Y") }} Fresh&Go. Todos los derechos reservados.
+        </div>
+    </div>
+</footer>
+
+
