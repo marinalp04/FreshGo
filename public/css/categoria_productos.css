@@ -44,10 +44,7 @@
 }
 
 /* Para ajustar las tarjetas y hacerlas más homogéneas */
-.row .col-12,
-.row .col-sm-6,
-.row .col-md-4,
-.row .col-lg-3 {
+.producto-item {
     display: flex;
     justify-content: center;
 }
