@@ -14,12 +14,18 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Imagen de producto */
+.producto-imagen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px; 
+    overflow: hidden;
+}
+
 .producto-imagen img {
-    height: 200px;
+    max-height: 100%;
+    max-width: 100%;
     object-fit: cover;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
 }
 
 /* Título y descripción */
