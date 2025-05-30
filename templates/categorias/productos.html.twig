@@ -37,7 +37,7 @@
 							<div class="card-body text-center">
 								<h5 class="card-title text-success">{{ producto.nombre }}</h5>
 								<p class="card-text text-muted">{{ producto.descripcion}}</p>
-								<p class="text-success h5">{{ producto.precio }}€</p>
+								<p class="text-success h5">{{ producto.precio|number_format(2) }}€</p>
 							</div>
 						</div>
 					</a>

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Alergeno;
 use App\Entity\Categoria;
 use App\Entity\Ingrediente;
 use App\Entity\PedidoCliente;
@@ -96,6 +97,7 @@ class DashboardController extends AbstractDashboardController
             yield MenuItem::linkToCrud('Pedidos', 'fas fa-shopping-cart', PedidoCliente::class);
             yield MenuItem::linkToCrud('Unidades de Medida', 'fas fa-balance-scale', UnidadMedida::class);
             yield MenuItem::linkToCrud('Ingredientes', 'fas fa-carrot', Ingrediente::class);
+            yield MenuItem::linkToCrud('Alergenos', 'fas fa-allergies', Alergeno::class);
         }
 
         if ($this->isGranted('ROLE_SUPER_ADMIN')) {

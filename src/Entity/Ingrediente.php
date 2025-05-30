@@ -33,9 +33,16 @@ class Ingrediente
     #[ORM\OneToMany(targetEntity: ComposicionProducto::class, mappedBy: 'ingrediente')]
     private Collection $composicionProductos;
 
+    /**
+     * @var Collection<int, Alergeno>
+     */
+    #[ORM\ManyToMany(targetEntity: Alergeno::class, inversedBy: 'ingredientes')]
+    private Collection $alergenos;
+
     public function __construct()
     {
         $this->composicionProductos = new ArrayCollection();
+        $this->alergenos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -105,6 +112,30 @@ class Ingrediente
                 $composicionProducto->setIngrediente(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Alergeno>
+     */
+    public function getAlergenos(): Collection
+    {
+        return $this->alergenos;
+    }
+
+    public function addAlergeno(Alergeno $alergeno): static
+    {
+        if (!$this->alergenos->contains($alergeno)) {
+            $this->alergenos->add($alergeno);
+        }
+
+        return $this;
+    }
+
+    public function removeAlergeno(Alergeno $alergeno): static
+    {
+        $this->alergenos->removeElement($alergeno);
 
         return $this;
     }
