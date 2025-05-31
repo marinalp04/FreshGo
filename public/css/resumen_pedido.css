@@ -10,3 +10,11 @@
 .sombra {
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
 }
+
+.is-valid {
+    border-color: #198754;
+}
+
+.is-invalid {
+    border-color: #dc3545;
+}
