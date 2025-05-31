@@ -49,3 +49,9 @@
     object-position: center;
 }
 
+.alergenos-scroll{
+    max-height: 120px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+

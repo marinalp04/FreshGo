@@ -38,6 +38,9 @@ class IngredienteCrudController extends AbstractCrudController
             TextField::new('nombre'),
             IntegerField::new('stock'),
             AssociationField::new('unidad_medida', 'Unidad de Medida'),
+            AssociationField::new('alergenos')
+            ->setFormTypeOptions(['by_reference' => false])
+            ->setHelp('Selecciona los alérgenos que contiene este ingrediente'),
         ];
     }
 

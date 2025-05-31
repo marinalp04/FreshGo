@@ -54,6 +54,29 @@
                     <p>No se han definido ingredientes para este plato.</p>
                 {% endif %}
 
+                {% set alergenos = [] %}
+
+                {% for composicion in producto.composicionProductos %}
+                    {% for alergeno in composicion.ingrediente.alergenos %}
+                        {% if alergeno not in alergenos %}
+                            {% set alergenos = alergenos|merge([alergeno]) %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+
+                {% if alergenos|length > 0 %}
+                    <div class="alert alert-warning mt-3 alergenos-scroll">
+                        <strong>Contiene los siguientes alérgenos:</strong>
+                        <ul class="mb-0">
+                            {% for alergeno in alergenos %}
+                                <li>{{ alergeno.nombre }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% else %}
+                    <p class="text-muted mt-3">Este plato no contiene alérgenos conocidos.</p>
+                {% endif %}
+
                 {% if cantidadMaxima < 1 %}
                     <p class="text-danger fw-bold">Este plato no está disponible por falta de stock.</p>
                 {% else %}
