@@ -47,6 +47,9 @@
     font-size: 0.9rem;
     line-height: 1.2;
 }
+.altura-contenedor{
+    height: 50vh;
+}
 
 /* Añadir scroll para la tabla en pantallas pequeñas y no rompa la plantilla */
 @media (max-width: 544px) {
