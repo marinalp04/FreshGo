@@ -1,6 +1,5 @@
 
 body {
-    /* background: linear-gradient(to bottom right, #e8f5e9, #a5d6a7);*/
   background: url('../images/fondo-login.jpg') no-repeat center center fixed;
   background-size: cover; 
   min-height: 100vh;

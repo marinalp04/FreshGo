@@ -6,9 +6,6 @@
     overflow: hidden;
 }
 
-
-
-
 .producto-titulo {
     color: #2e7d32;
 }
@@ -23,8 +20,6 @@
     color: #555;
 }
 
-
-
 /* Contenedor del carrusel */
 #carouselFotos {
     width: 100%;
@@ -38,7 +33,6 @@
 .carousel-item {
     height: 100%;
 }
-
 
 .carousel-foto {
     height: 100%;

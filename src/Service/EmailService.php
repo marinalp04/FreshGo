@@ -36,7 +36,6 @@ class EmailService
             $mail->send();
             return true;
         } catch (Exception $e) {
-            // Puedes loguear el error si quieres
             return false;
         }
     }

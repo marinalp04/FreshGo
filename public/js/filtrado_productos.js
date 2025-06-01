@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
 
-                // (Opcional) mostrar mensaje si no se encuentra nada
                 const sinResultados = document.getElementById('sin-resultados');
                 if (sinResultados) {
                     sinResultados.style.display = encontrados === 0 ? 'block' : 'none';

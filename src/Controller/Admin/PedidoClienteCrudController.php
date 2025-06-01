@@ -120,13 +120,4 @@ class PedidoClienteCrudController extends AbstractCrudController
     }
 
     
-    // public function show(AdminContext $context, CrudUrlGenerator $crudUrlGenerator): Response
-    // {
-    //     return $this->render('admin/pedido/show.html.twig', [
-    //         'entity' => $context->getEntity(),
-    //         'crudUrlGenerator' => $crudUrlGenerator,
-    //     ]);
-    // }
-
-    
 }
